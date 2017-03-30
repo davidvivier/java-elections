@@ -17,7 +17,7 @@ public class Elections {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws CloneNotSupportedException {
         
         HommePolitique h1, h2, h3;
         
@@ -61,7 +61,15 @@ public class Elections {
 
         System.out.println("h1.equals(h2) : " + h1.equals(h2));
 
-                
+        // Q3.1
+        h2 = (HommePolitique) h1.clone();
+        System.out.println("h1 == h2 :" + (h1 == h2));
+        System.out.println("h1.equals(h2) : " + h1.equals(h2));
+        System.out.println("h1.compareTo(h2) : " + h1.compareTo(h2));
+        
+        h1.setNomParti("Parti Perdant");
+        System.out.println("h1.equals(h2) : " + h1.equals(h2));
+        System.out.println("h1.compareTo(h2) : " + h1.compareTo(h2));
     }
     
 }
