@@ -41,6 +41,27 @@ public class Elections {
         
         // test du toString()
         System.out.println("h1 :" + h1.toString());
+        
+        // Q2.2
+        h2 = new HommePolitique(h1.getCivilite(), h1.getNom(), h1.getNomParti());
+        
+        System.out.println("h1 == h2 :" + (h1 == h2));
+        
+        System.out.println("h1.equals(h2) : " + h1.equals(h2));
+        
+        h1.setCivilite(Civilite.FEMME);
+        System.out.println("h1.getCivilite() = " + h1.getCivilite());
+        
+        // Q2.3
+        System.out.println("h1.compareTo(h2) : " + h1.compareTo(h2));
+        
+        System.out.println("h1.equals(h2) : " + h1.equals(h2));
+        h2.setCivilite(Civilite.FEMME);
+        System.out.println("h2.getCivilite() = " + h2.getCivilite());
+
+        System.out.println("h1.equals(h2) : " + h1.equals(h2));
+
+                
     }
     
 }
