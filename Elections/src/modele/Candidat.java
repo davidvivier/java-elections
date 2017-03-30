@@ -13,12 +13,19 @@ import java.util.Objects;
  */
 public final class Candidat {
 
-    private CandidatScrutin candidatScrutin;
-    private double pourcentVoix;
+    private final CandidatScrutin candidatScrutin;
+    private final double pourcentVoix;
 
     public Candidat(CandidatScrutin candidatScrutin, int nbVotesValides) {
         this.candidatScrutin = candidatScrutin;
-        this.pourcentVoix = candidatScrutin.getNbVoix() / (double) nbVotesValides;
+        if (nbVotesValides > 0)
+        {
+            this.pourcentVoix = 100*(candidatScrutin.getNbVoix() / (double) nbVotesValides);
+        }
+        else {
+            this.pourcentVoix = 0 ;
+        }
+        
     }
 
     @Override

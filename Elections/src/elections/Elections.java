@@ -5,6 +5,8 @@
  */
 package elections;
 
+import modele.Candidat;
+import modele.CandidatScrutin;
 import modele.Civilite;
 import modele.HommePolitique;
 
@@ -33,7 +35,7 @@ public class Elections {
         System.out.println("Est ce que nom a changé ? " + h3.getNom());
         
         System.out.println("Est ce que le nom du parti est correct ?" + h3.getNomParti());
-        h3.setNomParti("Parti National Socialiste des travailleurs allemands");
+        h3.setNomParti("Démocratie avec parti unique");
         System.out.println("Est ce que nom a changé ? " + h3.getNomParti());
         
         // ne compile pas car Civilite.ENFANT n'existe pas
@@ -70,6 +72,19 @@ public class Elections {
         h1.setNomParti("Parti Perdant");
         System.out.println("h1.equals(h2) : " + h1.equals(h2));
         System.out.println("h1.compareTo(h2) : " + h1.compareTo(h2));
+        
+        // Q4
+        CandidatScrutin cs1 = new CandidatScrutin(h1 ,10);
+        for (int i=0 ; i< 25 ; i++)
+        {
+            cs1.ajouterUneVoix();
+        }
+        Candidat c1 = new Candidat(cs1 ,45);
+        System.out.println(c1.getCandidatScrutin().toString());
+        System.out.println("Pourcent : "+c1.getPourcentVoix() );
+        
+        
+        
     }
     
 }
