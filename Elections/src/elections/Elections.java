@@ -80,8 +80,9 @@ public class Elections {
             cs1.ajouterUneVoix();
         }
         Candidat c1 = new Candidat(cs1 ,45);
-        System.out.println(c1.getCandidatScrutin().toString());
-        System.out.println("Pourcent : "+c1.getPourcentVoix() );
+        System.out.println("Nom :"+c1.getNom());
+        System.out.println("Parti :"+c1.getNomParti());
+        System.out.println("Pourcent : "+ String.format("%2.1f" ,c1.getPourcentVoix()) +" %" );
         
         
         

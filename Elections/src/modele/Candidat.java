@@ -63,9 +63,7 @@ public final class Candidat {
         return "Candidat{" + "candidat=" + candidatScrutin + ", pourcentVoix=" + pourcentVoix + '}';
     }
 
-    public CandidatScrutin getCandidatScrutin() {
-        return this.candidatScrutin;
-    }
+
 
     public int getNbVoix() {
         return this.candidatScrutin.getNbVoix();

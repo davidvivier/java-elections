@@ -94,4 +94,6 @@ public class CandidatScrutin {
     public int compareCandidat(CandidatScrutin candidatScrutin) {
         return this.hommePolitique.getNom().compareTo(candidatScrutin.getNom());
     }
+    
+    
 }
