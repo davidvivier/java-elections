@@ -9,11 +9,12 @@ package modele;
  *
  * @author Kevin
  */
-public class HommePolitique {
+public class HommePolitique implements Comparable<HommePolitique> {
 
     private Civilite civilite;
     private String nom;
     private String nomParti;
+    private boolean honnete = false;
 
     public HommePolitique(Civilite civilite, String nom, String nomParti) {
         this.civilite = civilite;
@@ -48,6 +49,11 @@ public class HommePolitique {
     @Override
     public String toString() {
         return "[civilité = " + this.civilite + ", nom = " + this.nom + ", parti = " + this.nomParti + "]";
+    }
+
+    @Override
+    public int compareTo(HommePolitique other) {
+        return this.nom.compareTo(other.nom);
     }
 
 }
