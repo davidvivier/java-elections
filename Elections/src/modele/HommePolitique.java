@@ -5,6 +5,8 @@
  */
 package modele;
 
+import java.util.Objects;
+
 /**
  *
  * @author Kevin
@@ -55,5 +57,40 @@ public class HommePolitique implements Comparable<HommePolitique> {
     public int compareTo(HommePolitique other) {
         return this.nom.compareTo(other.nom);
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 59 * hash + Objects.hashCode(this.civilite);
+        hash = 59 * hash + Objects.hashCode(this.nom);
+        hash = 59 * hash + (this.honnete ? 1 : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final HommePolitique other = (HommePolitique) obj;
+        if (this.civilite != other.civilite) {
+            return false;
+        }
+        if (!Objects.equals(this.nom, other.nom)) {
+            return false;
+        }
+        if (!Objects.equals(this.nomParti, other.nomParti)) {
+            return false;
+        }
+        if (this.honnete != other.honnete) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 
 }
