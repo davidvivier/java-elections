@@ -5,6 +5,9 @@
  */
 package elections;
 
+import modele.Civilite;
+import modele.HommePolitique;
+
 /**
  *
  * @author Kevin
@@ -15,7 +18,29 @@ public class Elections {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        
+        HommePolitique h1, h2, h3;
+        
+        h1 = new HommePolitique(Civilite.HOMME, "Sylvain Durif", "WTC");
+        h3 = new HommePolitique(Civilite.FEMME, "Eva Joly", "Verts");
+        
+        System.out.println("Est ce que la civilité est correct ?" + h3.getCivilite());
+        h3.setCivilite(Civilite.HOMME);
+        System.out.println("Est ce que civilité a changé ? " + h3.getCivilite());
+        
+        System.out.println("Est ce que le nom est correct ?" + h3.getNom());
+        h3.setNom("Jérôme Cahuzac");
+        System.out.println("Est ce que nom a changé ? " + h3.getNom());
+        
+        System.out.println("Est ce que le nom du parti est correct ?" + h3.getNomParti());
+        h3.setNomParti("Parti National Socialiste des travailleurs allemands");
+        System.out.println("Est ce que nom a changé ? " + h3.getNomParti());
+        
+        // ne compile pas car Civilite.ENFANT n'existe pas
+        //h1.setCivilite(Civilite.ENFANT);
+        
+        // test du toString()
+        System.out.println("h1 :" + h1.toString());
     }
     
 }
