@@ -1,10 +1,10 @@
-package fichiersPourTp.tp2;
+package modele;
 
 
 /**
  * @author francoise.perrin
- * Inspiration MOOC sur Coursera "Introduction à la POO (en Java)"
- * by Jamila Sam, Jean-Cédric Chappelier - EPFL 
+ * Inspiration MOOC sur Coursera "Introduction ï¿½ la POO (en Java)"
+ * by Jamila Sam, Jean-Cï¿½dric Chappelier - EPFL 
  */
 
 

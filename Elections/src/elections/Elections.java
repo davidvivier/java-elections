@@ -41,7 +41,7 @@ public class Elections {
 		dateSrutin = 15;		
 		population = 30;
 		votants = 20;
-
+                
 		/**
 		 * simulation de votes 
 		 * - tous sont envoyés à la même date 
