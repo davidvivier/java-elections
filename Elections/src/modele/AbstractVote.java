@@ -24,7 +24,7 @@ public abstract class AbstractVote implements Vote {
     }
     
     public HommePolitique getHommePolitique() {
-        //return this.hommePo
+        return this.hommePolitique;
     }
     
     public int getDateVote() {
@@ -34,5 +34,9 @@ public abstract class AbstractVote implements Vote {
     public int getDateScrutin() {
         return this.dateScrutin;
     }
+
+    
+    
+    
 
 }

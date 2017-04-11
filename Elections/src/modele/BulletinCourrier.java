@@ -34,5 +34,17 @@ public class BulletinCourrier extends AbstractVote implements CheckDateBulletin,
     public boolean checkSigne() {
         return this.signature;
     }
+
+    @Override
+    public String toString() {
+        if (estInvalide())
+        {
+            return "Vote par BulletinCourrier pour [civilité = " +  this.getHommePolitique().getCivilite() +", nom = "+this.getHommePolitique().getNom()+", parti = "+this.getHommePolitique().getNomParti()+"]-> invalide";
+        }else {
+            return "Vote par BulletinCourrier pour [civilité = " +  this.getHommePolitique().getCivilite() +", nom = "+this.getHommePolitique().getNom()+", parti = "+this.getHommePolitique().getNomParti()+"]-> valide";
+        }
+        
+    }
+    
     
 }

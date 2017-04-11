@@ -26,6 +26,15 @@ public class BulletinElectronique extends AbstractVote implements CheckDateBulle
         return !checkDate();
     }
 
-    
+    @Override
+    public String toString() {
+        if (estInvalide())
+        {
+            return "Vote par BulletinElectronique pour [civilité = " +  this.getHommePolitique().getCivilite() +", nom = "+this.getHommePolitique().getNom()+", parti = "+this.getHommePolitique().getNomParti()+"]-> invalide";
+        }else {
+            return "Vote par BulletinElectronique pour [civilité = " +  this.getHommePolitique().getCivilite() +", nom = "+this.getHommePolitique().getNom()+", parti = "+this.getHommePolitique().getNomParti()+"]-> valide";
+        }
+        
+    }
     
 }

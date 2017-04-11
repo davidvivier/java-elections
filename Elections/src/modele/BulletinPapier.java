@@ -29,6 +29,15 @@ public class BulletinPapier extends AbstractVote implements CheckSigneBulletin {
         return signature;
     }
     
-    
+    @Override
+    public String toString() {
+        if (estInvalide())
+        {
+            return "Vote par BulletinPapier pour [civilité = " +  this.getHommePolitique().getCivilite() +", nom = "+this.getHommePolitique().getNom()+", parti = "+this.getHommePolitique().getNomParti()+"]-> invalide";
+        }else {
+            return "Vote par BulletinPapier pour [civilité = " +  this.getHommePolitique().getCivilite() +", nom = "+this.getHommePolitique().getNom()+", parti = "+this.getHommePolitique().getNomParti()+"]-> valide";
+        }
+        
+    }
     
 }
