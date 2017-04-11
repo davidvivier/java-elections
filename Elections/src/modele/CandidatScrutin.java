@@ -11,13 +11,13 @@ import java.util.Objects;
  *
  * @author Kevin
  */
-public class CandidatScrutin {
+public class CandidatScrutin implements Comparable<CandidatScrutin> {
     
     private HommePolitique hommePolitique;
     private int nbVoix;
     private int date;
     
-    public CandidatScrutin(HommePolitique hommePolitique, int date) {
+    public CandidatScrutin(HommePolitique hommePolitique, int date)  {
         try {
             this.hommePolitique = (HommePolitique) hommePolitique.clone();
         } catch (CloneNotSupportedException ex) {
@@ -94,6 +94,24 @@ public class CandidatScrutin {
     public int compareCandidat(CandidatScrutin candidatScrutin) {
         return this.hommePolitique.getNom().compareTo(candidatScrutin.getNom());
     }
+
+    @Override
+	public int compareTo(CandidatScrutin candidat) {
+		int comp = 0;
+		if ((candidat != null)){
+			comp = this.hommePolitique.compareTo(candidat.getHommePolitique());
+		}
+		else
+			throw new NullPointerException();
+		return comp;
+	}
     
+    public boolean containsHommePolitique(HommePolitique hommePolitique) {
+		return this.hommePolitique.equals(hommePolitique);    		
+	}
+    
+    private HommePolitique getHommePolitique() {
+		return hommePolitique;
+	}
     
 }

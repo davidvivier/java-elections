@@ -11,12 +11,13 @@ import java.util.Objects;
  *
  * @author Kevin
  */
-public final class Candidat {
+public final class Candidat implements Comparable<Candidat>{
 
-    private final CandidatScrutin candidatScrutin;
-    private final double pourcentVoix;
+    private CandidatScrutin candidatScrutin;
+    private double pourcentVoix;
 
     public Candidat(CandidatScrutin candidatScrutin, int nbVotesValides) {
+        super();
         this.candidatScrutin = candidatScrutin;
         if (nbVotesValides > 0)
         {
@@ -84,5 +85,17 @@ public final class Candidat {
     public Civilite getCivilite() {
         return this.candidatScrutin.getCivilite();
     }
+
+    @Override
+	public int compareTo(Candidat candidat) {
+		int comp = 0;
+		if ((candidat != null))
+			comp = this.candidatScrutin.compareTo(candidat.candidatScrutin);
+		else
+			throw new NullPointerException();
+		return comp;
+	}
+        
+        
 
 }

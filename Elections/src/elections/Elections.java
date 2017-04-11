@@ -5,6 +5,9 @@
  */
 package elections;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import modele.Candidat;
 import modele.CandidatScrutin;
 import modele.Civilite;
@@ -21,71 +24,120 @@ public class Elections {
      */
     public static void main(String[] args) throws CloneNotSupportedException {
         
-        HommePolitique h1, h2, h3;
-        
-        h1 = new HommePolitique(Civilite.HOMME, "Sylvain Durif", "WTC");
-        h3 = new HommePolitique(Civilite.FEMME, "Eva Joly", "Verts");
-        
-        System.out.println("Est ce que la civilité est correct ?" + h3.getCivilite());
-        h3.setCivilite(Civilite.HOMME);
-        System.out.println("Est ce que civilité a changé ? " + h3.getCivilite());
-        
-        System.out.println("Est ce que le nom est correct ?" + h3.getNom());
-        h3.setNom("Jérôme Cahuzac");
-        System.out.println("Est ce que nom a changé ? " + h3.getNom());
-        
-        System.out.println("Est ce que le nom du parti est correct ?" + h3.getNomParti());
-        h3.setNomParti("Démocratie avec parti unique");
-        System.out.println("Est ce que nom a changé ? " + h3.getNomParti());
-        
-        // ne compile pas car Civilite.ENFANT n'existe pas
-        //h1.setCivilite(Civilite.ENFANT);
-        
-        // test du toString()
-        System.out.println("h1 :" + h1.toString());
-        
-        // Q2.2
-        h2 = new HommePolitique(h1.getCivilite(), h1.getNom(), h1.getNomParti());
-        
-        System.out.println("h1 == h2 :" + (h1 == h2));
-        
-        System.out.println("h1.equals(h2) : " + h1.equals(h2));
-        
-        h1.setCivilite(Civilite.FEMME);
-        System.out.println("h1.getCivilite() = " + h1.getCivilite());
-        
-        // Q2.3
-        System.out.println("h1.compareTo(h2) : " + h1.compareTo(h2));
-        
-        System.out.println("h1.equals(h2) : " + h1.equals(h2));
-        h2.setCivilite(Civilite.FEMME);
-        System.out.println("h2.getCivilite() = " + h2.getCivilite());
+        Scrutin scrutin;
+		int dateSrutin;	
+		int population;
+		int votants;
+		int dateBulletin;
+		List< HommePolitique> hommePolitiques;
+		
+		hommePolitiques = new ArrayList< HommePolitique>();
+		hommePolitiques.add(new HommePolitique(Civilite.HOMME, "Tarek Oxlama", "parti1"));
+		hommePolitiques.add(new HommePolitique(Civilite.HOMME,"Nicolai Tarcozi", "parti2"));
+		hommePolitiques.add(new HommePolitique(Civilite.HOMME,"Vlad Imirboutine", "parti3"));
+		hommePolitiques.add(new HommePolitique(Civilite.FEMME,"Angel Anerckjel", "parti4"));
+		
+		scrutin = null;
+		dateSrutin = 15;		
+		population = 30;
+		votants = 20;
 
-        System.out.println("h1.equals(h2) : " + h1.equals(h2));
+		/**
+		 * simulation de votes 
+		 * - tous sont envoyés à la même date 
+		 * - Tous passent le check de date
+		 * - 1 bulletins papier sur 2 passe check signature
+		 */				
+		System.out.println("\n\t1ère simulation \n" );
+		dateBulletin = 13;	
+		// simulation votes
+		scrutin = simulerVotes(hommePolitiques, votants, dateSrutin, dateBulletin, population);
+		// Traitement après vote
+		scrutin.countTheVotes();
+		// Affichage résultat brut du scrutin
+		System.out.println(scrutin);
 
-        // Q3.1
-        h2 = (HommePolitique) h1.clone();
-        System.out.println("h1 == h2 :" + (h1 == h2));
-        System.out.println("h1.equals(h2) : " + h1.equals(h2));
-        System.out.println("h1.compareTo(h2) : " + h1.compareTo(h2));
-        
-        h1.setNomParti("Parti Perdant");
-        System.out.println("h1.equals(h2) : " + h1.equals(h2));
-        System.out.println("h1.compareTo(h2) : " + h1.compareTo(h2));
-        
-        // Q4
-        CandidatScrutin cs1 = new CandidatScrutin(h1 ,10);
-        for (int i=0 ; i< 25 ; i++)
-        {
-            cs1.ajouterUneVoix();
-        }
-        Candidat c1 = new Candidat(cs1 ,45);
-        System.out.println("Nom :"+c1.getNom());
-        System.out.println("Parti :"+c1.getNomParti());
-        System.out.println("Pourcent : "+ String.format("%2.1f" ,c1.getPourcentVoix()) +" %" );
-        
-        
-        
-    }
-    
+
+		/**
+		 * simulation de votes 
+		 * - tous sont envoyés à la même date invalide
+		 * - Seuls les bulletins papier passent le check
+		 * - 1 bulletins papier sur 2 passe check signature
+		 */		
+		System.out.println("\n\t2ème simulation \n" );
+		dateBulletin = 16;		
+		// simulation votes
+		scrutin = simulerVotes(hommePolitiques, votants, dateSrutin, dateBulletin, population);	
+		// Traitement après vote
+		scrutin.countTheVotes();
+		// Affichage résultat brut du scrutin
+		System.out.println(scrutin);
+	}
+
+
+	private static Scrutin simulerVotes(List< HommePolitique> hommePolitiques, int votants,
+			int dateSrutin, int dateBulletin, int population) {
+
+		Scrutin scrutin = new Scrutin(hommePolitiques, population, dateSrutin);
+
+		// ou bien
+		//		scrutin = new Scrutin(population, dateSrutin);
+		//		for (HommePolitique hommePolitique : hommePolitiques )
+		//			scrutin.addCandidat(hommePolitique);
+
+		//System.out.println(scrutin);
+
+		if (hommePolitiques!=null){
+			for (int i = 0; i < votants; ++i) {
+
+				int candNum = Utils.randomInt(hommePolitiques.size());
+				Vote vote = null;
+
+				// bulletins papiers impairs sont signés, pairs sont non signés
+				boolean signature = true;
+				if ((i % 2) == 0) {
+					signature = false;
+				}
+
+				// simulation création bulletins de vote
+				switch (i % 3) {
+				case 0:{
+					vote = new BulletinElectronique(hommePolitiques.get(candNum), dateBulletin, dateSrutin);			
+					break;
+				}			
+				case 1:{
+					vote = new BulletinPapier(hommePolitiques.get(candNum), dateBulletin, dateSrutin, signature);
+					break;
+				}
+				case 2:{
+					vote = new BulletinCourrier(hommePolitiques.get(candNum), dateBulletin, dateSrutin, signature);
+				}
+				default: // nothing			
+				}
+			//	System.out.println(vote);		// pour vérif ToString() des classes qui implémentent Vote
+				scrutin.addBulletin(vote);				
+			}
+		}
+		return scrutin;
+	}
+}
+
+
+/**
+ * Classe utilitaire
+ *
+ */
+class Utils {
+
+	private static final Random RANDOM = new Random();
+
+	// initialise le générateur de nombres aléatoires
+	public static void setSeed(long seed) {
+		RANDOM.setSeed(seed);
+	}
+
+	// génère un entier entre 0 et max (max non compris)
+	public static int randomInt(int max) {
+		return RANDOM.nextInt(max);
+	}
 }
