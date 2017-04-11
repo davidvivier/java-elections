@@ -14,7 +14,7 @@ public class BulletinCourrier extends AbstractVote implements CheckDateBulletin,
     
     private boolean signature;
     
-    public BulletinCourrier(int dateScrutin, int dateVote, HommePolitique h, boolean signature) {
+    public BulletinCourrier(HommePolitique h, int dateScrutin, int dateVote, boolean signature) {
         super(dateScrutin, dateVote, h);
         this.signature = signature;
     }

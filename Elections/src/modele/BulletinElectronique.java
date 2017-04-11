@@ -12,7 +12,7 @@ package modele;
  */
 public class BulletinElectronique extends AbstractVote implements CheckDateBulletin {
 
-    public BulletinElectronique(int dateScrutin, int dateVote, HommePolitique h) {
+    public BulletinElectronique(HommePolitique h, int dateScrutin, int dateVote) {
         super(dateScrutin, dateVote, h);
     }
     

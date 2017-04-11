@@ -8,10 +8,15 @@ package elections;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import modele.BulletinCourrier;
+import modele.BulletinElectronique;
+import modele.BulletinPapier;
 import modele.Candidat;
 import modele.CandidatScrutin;
 import modele.Civilite;
 import modele.HommePolitique;
+import modele.Scrutin;
+import modele.Vote;
 
 /**
  *
@@ -53,7 +58,7 @@ public class Elections {
 		// simulation votes
 		scrutin = simulerVotes(hommePolitiques, votants, dateSrutin, dateBulletin, population);
 		// Traitement après vote
-		scrutin.countTheVotes();
+		scrutin.countVotes();
 		// Affichage résultat brut du scrutin
 		System.out.println(scrutin);
 
@@ -69,7 +74,7 @@ public class Elections {
 		// simulation votes
 		scrutin = simulerVotes(hommePolitiques, votants, dateSrutin, dateBulletin, population);	
 		// Traitement après vote
-		scrutin.countTheVotes();
+		scrutin.countVotes();
 		// Affichage résultat brut du scrutin
 		System.out.println(scrutin);
 	}
