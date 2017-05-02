@@ -11,6 +11,9 @@ import modele.Civilite;
 import modele.HommePolitique;
 import modele.Scrutin;
 import elections.Elections;
+import static elections.Elections.afficheMapHommeImages;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * @author francoise.perrin Inspiration MOOC sur Coursera "Introduction � la POO
@@ -23,9 +26,14 @@ public class ElectionLauncher {
      */
     public static void main(String[] args) {
         
-        Elections.afficheSimulationTrie("pourcentage");
-        Elections.afficheSimulationTrie("alphabétique");
+        //Elections.afficheSimulationTrie("pourcentage");
+        //Elections.afficheSimulationTrie("alphabétique");
         //Election election = new Election();
 
+        
+        TreeMap<HommePolitique,String> mapHommesImages = (TreeMap<HommePolitique,String>) Elections.creMapImages();
+        //mapHommesImages.toString();
+        
+        afficheMapHommeImages(mapHommesImages);
     }
 }

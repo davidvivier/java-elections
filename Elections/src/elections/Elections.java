@@ -6,9 +6,12 @@
 package elections;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.TreeMap;
 import modele.BulletinCourrier;
 import modele.BulletinElectronique;
 import modele.BulletinPapier;
@@ -25,6 +28,42 @@ import modele.Vote;
  */
 public class Elections {
 
+    public static void afficheMapHommeImages(Map<HommePolitique,String> m) {
+        String str ="";
+        for(Map.Entry<HommePolitique,String> entry : m.entrySet()) {
+            str += entry.getKey() + " , " + entry.getValue()+"\n";
+        }
+        
+        System.out.println(str);
+    }
+    
+    public static Map<HommePolitique,String> creMapImages() {
+        List<HommePolitique> hommePolitiques = new ArrayList< >();
+        hommePolitiques.add(new HommePolitique(Civilite.HOMME, "Tarek Oxlama", "parti1"));
+        hommePolitiques.add(new HommePolitique(Civilite.HOMME, "Nicolai Tarcozi", "parti2"));
+        hommePolitiques.add(new HommePolitique(Civilite.HOMME, "Vlad Imirboutine", "parti3"));
+        hommePolitiques.add(new HommePolitique(Civilite.FEMME, "Angel Anerckjel", "parti4"));
+        hommePolitiques.add(new HommePolitique(Civilite.FEMME, "Chuck Norris", "Violence"));
+        hommePolitiques.add(new HommePolitique(Civilite.HOMME, "Sylvain Durrif", "L'homme Vert"));
+        hommePolitiques.add(new HommePolitique(Civilite.HOMME, "Eddi Malou", "Congolexicomatisation"));
+        
+        List<String> images = new ArrayList<>() ;
+        images.add("../images/gif/bunny.gif");
+        images.add("../images/gif/cricket.gif");
+        images.add("../images/gif/fantome.gif");
+        images.add("../images/gif/felixCat.gif");
+        images.add("../images/gif/minnie.gif");
+        images.add("../images/gif/schtroumpfs.gif");
+        images.add("../images/gif/sorciere.gif");
+        
+        Map<HommePolitique,String> mapHommesImages = new TreeMap<>();
+        
+        for(int i=0 ; i<7 ; i++) {
+            mapHommesImages.put(hommePolitiques.get(i), images.get(i));
+        }
+        return mapHommesImages;
+        
+    }
     
     public static void afficheSimulationTrie(String typeTri) {
         if (typeTri.equals("alphabétique")){
