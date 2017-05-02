@@ -28,6 +28,10 @@ import modele.Vote;
  */
 public class Elections {
 
+    public static void creMapCandidatImages(Map<HommePolitique,String> m) {
+        
+    }
+    
     public static void afficheMapHommeImages(Map<HommePolitique,String> m) {
         String str ="";
         for(Map.Entry<HommePolitique,String> entry : m.entrySet()) {
