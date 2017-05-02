@@ -10,34 +10,12 @@ package modele;
  *
  * @author david.vivier
  */
-public class BulletinPapier extends AbstractVote implements CheckSigneBulletin {
-    
-    private boolean signature;
-    
-    public BulletinPapier(HommePolitique h, int dateScrutin, int dateVote, boolean signature) {
-        super(dateScrutin, dateVote, h);
-        this.signature = signature;
+public class BulletinPapier extends AbstractVotePapier implements Vote {
+ 
+    public BulletinPapier(HommePolitique hommePolitique, int dateVote, int dateScrutin, boolean signature) {
+        super(hommePolitique, dateVote, dateScrutin, signature);
     }
-
-    @Override
-    public boolean estInvalide() {
-        return !checkSigne();
-    }
-
-    @Override
-    public boolean checkSigne() {
-        return signature;
-    }
-    
-    @Override
-    public String toString() {
-        if (estInvalide())
-        {
-            return "Vote par BulletinPapier pour [civilité = " +  this.getHommePolitique().getCivilite() +", nom = "+this.getHommePolitique().getNom()+", parti = "+this.getHommePolitique().getNomParti()+"]-> invalide";
-        }else {
-            return "Vote par BulletinPapier pour [civilité = " +  this.getHommePolitique().getCivilite() +", nom = "+this.getHommePolitique().getNom()+", parti = "+this.getHommePolitique().getNomParti()+"]-> valide";
-        }
-        
-    }
-    
+ 
+   
+ 
 }

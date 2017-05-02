@@ -10,31 +10,19 @@ package modele;
  *
  * @author david.vivier
  */
-public class BulletinElectronique extends AbstractVote implements CheckDateBulletin {
-
-    public BulletinElectronique(HommePolitique h, int dateScrutin, int dateVote) {
-        super(dateScrutin, dateVote, h);
+public class BulletinElectronique extends AbstractVote implements CheckDateBulletin, Vote {
+ 
+    public BulletinElectronique(HommePolitique hommePolitique, int dateVote, int dateScrutin) {
+        super(hommePolitique, dateVote, dateScrutin);
     }
-    
-    
+ 
     public boolean checkDate() {
-        return (this.getDateScrutin() - this.getDateVote() >= 2);
+        return getDate() <= getDateScrutin() - 2;
     }
-    
+ 
     @Override
     public boolean estInvalide() {
         return !checkDate();
     }
-
-    @Override
-    public String toString() {
-        if (estInvalide())
-        {
-            return "Vote par BulletinElectronique pour [civilité = " +  this.getHommePolitique().getCivilite() +", nom = "+this.getHommePolitique().getNom()+", parti = "+this.getHommePolitique().getNomParti()+"]-> invalide";
-        }else {
-            return "Vote par BulletinElectronique pour [civilité = " +  this.getHommePolitique().getCivilite() +", nom = "+this.getHommePolitique().getNom()+", parti = "+this.getHommePolitique().getNomParti()+"]-> valide";
-        }
-        
-    }
-    
+ 
 }

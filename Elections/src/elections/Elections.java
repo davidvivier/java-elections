@@ -11,8 +11,6 @@ import java.util.Random;
 import modele.BulletinCourrier;
 import modele.BulletinElectronique;
 import modele.BulletinPapier;
-import modele.Candidat;
-import modele.CandidatScrutin;
 import modele.Civilite;
 import modele.HommePolitique;
 import modele.Scrutin;
@@ -27,9 +25,9 @@ public class Elections {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws CloneNotSupportedException {
-        
-        Scrutin scrutin;
+    public static void main(String args[]) {
+
+		Scrutin scrutin;
 		int dateSrutin;	
 		int population;
 		int votants;
@@ -46,7 +44,7 @@ public class Elections {
 		dateSrutin = 15;		
 		population = 30;
 		votants = 20;
-                
+
 		/**
 		 * simulation de votes 
 		 * - tous sont envoyés à la même date 
@@ -58,7 +56,7 @@ public class Elections {
 		// simulation votes
 		scrutin = simulerVotes(hommePolitiques, votants, dateSrutin, dateBulletin, population);
 		// Traitement après vote
-		scrutin.countVotes();
+		scrutin.countTheVotes();
 		// Affichage résultat brut du scrutin
 		System.out.println(scrutin);
 
@@ -74,7 +72,7 @@ public class Elections {
 		// simulation votes
 		scrutin = simulerVotes(hommePolitiques, votants, dateSrutin, dateBulletin, population);	
 		// Traitement après vote
-		scrutin.countVotes();
+		scrutin.countTheVotes();
 		// Affichage résultat brut du scrutin
 		System.out.println(scrutin);
 	}

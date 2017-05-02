@@ -14,74 +14,133 @@ import java.util.List;
  * @author david.vivier
  */
 public class Scrutin {
-    
-    private List<CandidatScrutin> candidatsScrutin;
-    private List<Vote> votes;
-    private int nbVotesValides;    
-    private int population;
-    private int dateScrutin;
-    
-    public Scrutin(int population, int dateScrutin) {
-        this.population = population;
-        this.dateScrutin = dateScrutin;
-        this.candidatsScrutin = new LinkedList<>();
-        this.votes = new LinkedList<>();
-    }
-    
-    public Scrutin(List<HommePolitique> hommesPolitiques, int population, int dateScrutin) {
-        this(population, dateScrutin);
-        for (HommePolitique h : hommesPolitiques) {
-            candidatsScrutin.add(new CandidatScrutin(h, dateScrutin));
-        }
-    }
-    
-    public int getPopulation() {
-        return population;
-    }
 
-    public int getDateScrutin() {
-        return dateScrutin;
-    }
-    
-    public void addCandidat(HommePolitique h) {
-        candidatsScrutin.add(new CandidatScrutin(h, dateScrutin));
-    }
-    
-    public void addBulletin(Vote bulletin) {
-        votes.add(bulletin);
-    }
-    
-    public String toString() {
-        String str = "Scrutin du " + this.dateScrutin;
-               str += " - " + population + " inscrits ";
-               str += "\n";
-        for (CandidatScrutin candidat : this.candidatsScrutin) {
-            str += "  " + candidat.getNom() + "(" + candidat.getNomParti() + ")";
-            str += " : " + candidat.getNbVoix() + " voix";
-            str += "\n";
-        }
-        str += "Taux de participation : " + this.tauxParticipation();
-        return str;
-    }
-    
-    public void countVotes() {
-        for (Vote vote : this.votes) {
-            if (!vote.estInvalide()) {
-                vote.getHommePolitique();
-                for (CandidatScrutin candidat : this.candidatsScrutin) {
-                    if (candidat.estLeMemeQue(vote.getHommePolitique())) {
-                        candidat.ajouterUneVoix();
-                        this.nbVotesValides++;
-                        System.out.println("+1 pour " + candidat.getNom());
-                    }
-                }
-            } else {
-                System.out.println("bulletin invalide");
-            }
-        }
-    }
-    
-    public float tauxParticipation() {
-        return 100.0f*((float) nbVotesValides)/((float)population);
-    }
+	private List<CandidatScrutin> candidatScrutins;
+
+	private List<Vote> votes;	
+
+	private int dateScrutin;
+	private int population;
+	private int nbVotesValides;
+
+	/**
+	 * Crée un scrutin
+	 *
+	 * @param population
+	 *            Nombre maximal de personnes pouvant voter
+	 * @param dateScrutin
+	 *            date scrutin simulée par un int
+	 */
+	public Scrutin(int population, int dateScrutin) {
+		this(null, population, dateScrutin);
+	}
+
+	/**
+	 * Crée un scrutin
+	 *
+	 * @param hommesPolitiques
+	 *            l'ensemble des hommes politiques candidatScrutins à l'élection
+	 * @param population
+	 *            Nombre maximal de personnes pouvant voter
+	 * @param dateScrutin
+	 *            date scrutin simulée par un int
+	 */
+	public Scrutin(List<HommePolitique> hommesPolitiques, int population, int dateScrutin) {
+		super();
+		this.nbVotesValides = 0;
+		this.population = population;      
+		this.dateScrutin = dateScrutin;
+		this.votes = new LinkedList<Vote>();
+		this.candidatScrutins = new LinkedList<CandidatScrutin>();
+		this.initListCandidatScrutins(hommesPolitiques);
+	}
+
+	/**
+	 * @param hommesPolitiques
+	 * 		crée les différents candidatScrutins à partir de la liste des HommesPolitiques, 
+	 * 		(initialise leur nb de voix à 0) et les ajoute dans la liste
+	 */
+	private void initListCandidatScrutins(List<HommePolitique> hommesPolitiques) {
+		if (hommesPolitiques != null){
+			for (HommePolitique hommePolitique : hommesPolitiques ) {
+				addCandidatScrutin(hommePolitique);
+			}
+		}
+	}
+
+	/**
+	 * @param hommesPolitique
+	 * 		crée 1 candidatScrutin à partir d'1 HommePolitique, 
+	 * 		et l' ajoute dans la liste
+	 */
+	public void addCandidatScrutin(HommePolitique hommePolitique) {
+		CandidatScrutin candidatScrutin = null;
+		candidatScrutin = new CandidatScrutin(hommePolitique, this.getDateScrutin());
+		this.candidatScrutins.add(candidatScrutin);
+	}
+
+
+	/**
+	 * @param vote
+	 * 		ajoute le vote à la liste
+	 */
+	public void addBulletin(Vote vote) {
+		if (votes!=null)
+			votes.add(vote);
+	}
+
+	/**
+	 * Dépouille chaque vote et si le vote est valide
+	 * met à jour nb voix du candidatScrutin concerné
+	 * et incrémente compteur de votes valides.
+	 */
+	public void countTheVotes() {
+		HommePolitique hommePolitique = null;		
+		for (Vote vote : votes) {
+			if (!vote.estInvalide()) {
+				hommePolitique = vote.getHommePolitique();
+				for (CandidatScrutin candidatScrutin : candidatScrutins){
+					if (candidatScrutin.containsHommePolitique(hommePolitique) && candidatScrutin.getDateScrutin() == this.getDateScrutin() ) {
+						candidatScrutin.addVoix();
+					}
+				}				
+				nbVotesValides++;
+			}
+		}
+	}
+
+	public double tauxParticipation() {
+		double ret = 0;
+		ret = nbVotesValides * 100.0 / getPopulation();
+		return ret;
+	}
+
+	public int getDateScrutin() {
+		return dateScrutin;
+	}
+
+	public void setDateScrutin(int dateScrutin) {
+		this.dateScrutin = dateScrutin;
+	}
+
+	public int getPopulation() {
+		return population;
+	}
+
+	public void setPopulation(int population) {
+		this.population = population;
+	}
+
+	@Override
+	public String toString() {
+		double taux = this.tauxParticipation();
+		String ret = "Scrutin [dateScrutin=" + dateScrutin + ", " +
+		"population=" + population + ", " +
+		"totalVotants="	+ nbVotesValides + "," +
+		String.format("Taux de participation avec vote valide=%2.1f", taux)+ "%" +
+		"\ncandidatScrutins =" + candidatScrutins +"]";
+		return ret;
+	}	
+	
+	
 }

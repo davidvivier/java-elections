@@ -17,24 +17,34 @@ public abstract class AbstractVote implements Vote {
     
     private HommePolitique hommePolitique;
     
-    public AbstractVote(int dateScrutin, int dateVote, HommePolitique h) {
-        this.dateScrutin = dateScrutin;
+    public AbstractVote(HommePolitique hommePolitique, int dateVote, int dateScrutin) {
+    	this.hommePolitique = hommePolitique;
         this.dateVote = dateVote;
-        this.hommePolitique = h;
+        this.dateScrutin = dateScrutin;
     }
     
     public HommePolitique getHommePolitique() {
         return this.hommePolitique;
     }
     
-    public int getDateVote() {
-        return this.dateVote;
+    public int getDate() {
+        return dateVote;
     }
     
     public int getDateScrutin() {
-        return this.dateScrutin;
+	return dateScrutin;
     }
 
+    @Override
+    public String toString() {
+        String result = "Vote par " + this.getClass().getSimpleName()+ " pour le candidat " + getHommePolitique();
+        if (this.estInvalide()) {
+            result += " -> invalide";
+        } else {
+            result += " -> valide";
+        }
+        return result;
+    }
     
     
     

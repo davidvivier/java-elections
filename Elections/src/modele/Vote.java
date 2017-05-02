@@ -9,5 +9,5 @@ package modele;
 public interface Vote {
 	public boolean estInvalide();
 	public HommePolitique getHommePolitique() ; 
-	public int getDateVote();
+	public int getDate();
 }

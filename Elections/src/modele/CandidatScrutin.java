@@ -114,4 +114,11 @@ public class CandidatScrutin implements Comparable<CandidatScrutin> {
 		return hommePolitique;
 	}
     
+    
+    /**
+	 * Ajoute une voix en faveur du candidat
+	 */
+	public void addVoix() {
+		++nbVoix;
+	} 
 }

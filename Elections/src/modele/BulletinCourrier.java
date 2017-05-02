@@ -10,41 +10,23 @@ package modele;
  *
  * @author david.vivier
  */
-public class BulletinCourrier extends AbstractVote implements CheckDateBulletin, CheckSigneBulletin {
-    
-    private boolean signature;
-    
-    public BulletinCourrier(HommePolitique h, int dateScrutin, int dateVote, boolean signature) {
-        super(dateScrutin, dateVote, h);
-        this.signature = signature;
+public class BulletinCourrier extends AbstractVotePapier implements CheckDateBulletin, Vote {
+	 
+    public BulletinCourrier(HommePolitique hommePolitique, int dateVote, int dateScrutin, boolean signature) {
+        super(hommePolitique, dateVote, dateScrutin, signature);
     }
-
+ 
+    public boolean checkDate() {
+        return getDate() <= getDateScrutin();
+    }
+ 
     @Override
     public boolean estInvalide() {
-        return !checkDate() || !checkSigne();
+        // un bulletin courrier est invalide s'il n'est
+        // pas signé ou que la date limite est dépassée
+        return (super.estInvalide() || !checkDate());
+ 
     }
-
-    @Override
-    public boolean checkDate() {
-        // arrive au plus tard le jour même
-        return (this.getDateVote() <= this.getDateScrutin());
-    }
-
-    @Override
-    public boolean checkSigne() {
-        return this.signature;
-    }
-
-    @Override
-    public String toString() {
-        if (estInvalide())
-        {
-            return "Vote par BulletinCourrier pour [civilité = " +  this.getHommePolitique().getCivilite() +", nom = "+this.getHommePolitique().getNom()+", parti = "+this.getHommePolitique().getNomParti()+"]-> invalide";
-        }else {
-            return "Vote par BulletinCourrier pour [civilité = " +  this.getHommePolitique().getCivilite() +", nom = "+this.getHommePolitique().getNom()+", parti = "+this.getHommePolitique().getNomParti()+"]-> valide";
-        }
-        
-    }
-    
-    
+ 
+ 
 }
