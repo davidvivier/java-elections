@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package modele;
 
 /**
@@ -11,18 +10,18 @@ package modele;
  * @author david.vivier
  */
 public class BulletinElectronique extends AbstractVote implements CheckDateBulletin, Vote {
- 
+
     public BulletinElectronique(HommePolitique hommePolitique, int dateVote, int dateScrutin) {
         super(hommePolitique, dateVote, dateScrutin);
     }
- 
+
     public boolean checkDate() {
         return getDate() <= getDateScrutin() - 2;
     }
- 
+
     @Override
     public boolean estInvalide() {
         return !checkDate();
     }
- 
+
 }

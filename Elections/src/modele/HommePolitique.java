@@ -91,7 +91,7 @@ public class HommePolitique implements Comparable<HommePolitique>, Cloneable {
         return true;
     }
 
-   @Override
+    @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
 

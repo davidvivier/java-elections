@@ -12,12 +12,12 @@ import java.util.Objects;
  * @author Kevin
  */
 public class CandidatScrutin implements Comparable<CandidatScrutin> {
-    
+
     private HommePolitique hommePolitique;
     private int nbVoix;
     private int date;
-    
-    public CandidatScrutin(HommePolitique hommePolitique, int date)  {
+
+    public CandidatScrutin(HommePolitique hommePolitique, int date) {
         try {
             this.hommePolitique = (HommePolitique) hommePolitique.clone();
         } catch (CloneNotSupportedException ex) {
@@ -56,69 +56,68 @@ public class CandidatScrutin implements Comparable<CandidatScrutin> {
         }
         return true;
     }
-    
-    
-    
+
     public String toString() {
         return this.hommePolitique.toString() + " - Scrutin du " + this.date + " : " + this.nbVoix + " voix";
     }
-    
+
     public int getNbVoix() {
         return this.nbVoix;
     }
-    
+
     public int getDateScrutin() {
         return this.date;
     }
-    
+
     public String getNom() {
         return this.hommePolitique.getNom();
     }
-    
+
     public String getNomParti() {
         return this.hommePolitique.getNomParti();
     }
-    
+
     public Civilite getCivilite() {
         return this.hommePolitique.getCivilite();
     }
-    
+
     public void ajouterUneVoix() {
         this.nbVoix++;
     }
-    
+
     public boolean estLeMemeQue(HommePolitique other) {
         return this.hommePolitique.equals(other);
     }
-    
+
     public int compareCandidat(CandidatScrutin candidatScrutin) {
         return this.hommePolitique.getNom().compareTo(candidatScrutin.getNom());
     }
 
     @Override
-	public int compareTo(CandidatScrutin candidat) {
-		int comp = 0;
-		if ((candidat != null)){
-			comp = this.hommePolitique.compareTo(candidat.getHommePolitique());
-		}
-		else
-			throw new NullPointerException();
-		return comp;
-	}
-    
+    public int compareTo(CandidatScrutin candidat) {
+        int comp = 0;
+        if ((candidat != null)) {
+            comp = this.hommePolitique.compareTo(candidat.getHommePolitique());
+        } else {
+            throw new NullPointerException();
+        }
+        return comp;
+    }
+
     public boolean containsHommePolitique(HommePolitique hommePolitique) {
-		return this.hommePolitique.equals(hommePolitique);    		
-	}
-    
+        return this.hommePolitique.equals(hommePolitique);
+    }
+
     private HommePolitique getHommePolitique() {
-		return hommePolitique;
-	}
-    
-    
+        return hommePolitique;
+    }
+
     /**
-	 * Ajoute une voix en faveur du candidat
-	 */
-	public void addVoix() {
-		++nbVoix;
-	} 
+     * Ajoute une voix en faveur du candidat
+     */
+    public void addVoix() {
+        ++nbVoix;
+    }
+    
+    
 }

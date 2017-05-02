@@ -5,13 +5,14 @@
  */
 package modele;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
  *
  * @author Kevin
  */
-public final class Candidat implements Comparable<Candidat>{
+public final class Candidat implements Comparable<Candidat> {
 
     private CandidatScrutin candidatScrutin;
     private double pourcentVoix;
@@ -19,14 +20,12 @@ public final class Candidat implements Comparable<Candidat>{
     public Candidat(CandidatScrutin candidatScrutin, int nbVotesValides) {
         super();
         this.candidatScrutin = candidatScrutin;
-        if (nbVotesValides > 0)
-        {
-            this.pourcentVoix = 100*(candidatScrutin.getNbVoix() / (double) nbVotesValides);
+        if (nbVotesValides > 0) {
+            this.pourcentVoix = 100 * (candidatScrutin.getNbVoix() / (double) nbVotesValides);
+        } else {
+            this.pourcentVoix = 0;
         }
-        else {
-            this.pourcentVoix = 0 ;
-        }
-        
+
     }
 
     @Override
@@ -64,8 +63,6 @@ public final class Candidat implements Comparable<Candidat>{
         return "Candidat{" + "candidat=" + candidatScrutin + ", pourcentVoix=" + pourcentVoix + '}';
     }
 
-
-
     public int getNbVoix() {
         return this.candidatScrutin.getNbVoix();
     }
@@ -87,15 +84,16 @@ public final class Candidat implements Comparable<Candidat>{
     }
 
     @Override
-	public int compareTo(Candidat candidat) {
-		int comp = 0;
-		if ((candidat != null))
-			comp = this.candidatScrutin.compareTo(candidat.candidatScrutin);
-		else
-			throw new NullPointerException();
-		return comp;
-	}
-        
-        
+    public int compareTo(Candidat candidat) {
+        int comp = 0;
+        if ((candidat != null)) {
+            comp = this.candidatScrutin.compareTo(candidat.candidatScrutin);
+        } else {
+            throw new NullPointerException();
+        }
+        return comp;
+    }
+    
+    
 
 }
