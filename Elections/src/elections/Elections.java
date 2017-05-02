@@ -6,12 +6,14 @@
 package elections;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import modele.BulletinCourrier;
 import modele.BulletinElectronique;
 import modele.BulletinPapier;
 import modele.Candidat;
+import modele.CandidatComparator;
 import modele.Civilite;
 import modele.HommePolitique;
 import modele.Scrutin;
@@ -24,12 +26,49 @@ import modele.Vote;
 public class Elections {
 
     
-    public static void afficheResultatsVotes(List< HommePolitique> hommePolitiques, int votants,int dateSrutin, int dateBulletin, int population){
+    public static void afficheSimulationTrie(String typeTri) {
+        if (typeTri.equals("alphabétique")){
+            afficheResultatsVotes(1);
+        }else if (typeTri.equals("pourcentage")) {
+            afficheResultatsVotes(2);
+        }
+    }
+    
+    private static void afficheResultatsVotes(int typeTri){
         //on lance la simulation
+        int dateSrutin;
+        int population;
+        int votants;
+        int dateBulletin;
+        List< HommePolitique> hommePolitiques;
+
+        hommePolitiques = new ArrayList< >();
+        hommePolitiques.add(new HommePolitique(Civilite.HOMME, "Tarek Oxlama", "parti1"));
+        hommePolitiques.add(new HommePolitique(Civilite.HOMME, "Nicolai Tarcozi", "parti2"));
+        hommePolitiques.add(new HommePolitique(Civilite.HOMME, "Vlad Imirboutine", "parti3"));
+        hommePolitiques.add(new HommePolitique(Civilite.FEMME, "Angel Anerckjel", "parti4"));
+        hommePolitiques.add(new HommePolitique(Civilite.FEMME, "Chuck Norris", "Violence"));
+        hommePolitiques.add(new HommePolitique(Civilite.HOMME, "Sylvain Durrif", "L'homme Vert"));
+        hommePolitiques.add(new HommePolitique(Civilite.HOMME, "Eddi Malou", "Congolexicomatisation"));
+        
+
+        dateSrutin = 15;
+        population = 30;
+        votants = 20;
+        dateBulletin = 13;
         
         Scrutin scrutinSimule = simulerVotes(hommePolitiques,votants,dateSrutin,dateBulletin,population);
         scrutinSimule.countTheVotes();
         List<Candidat> listeCandidats = scrutinSimule.resultCandidatToArrayList();
+        
+        if (typeTri == 2)
+        {
+            Collections.sort(listeCandidats, new CandidatComparator());
+        } else if (typeTri == 1) {
+            Collections.sort(listeCandidats);
+        }
+        
+        
         System.out.println(toStringListCandidats(listeCandidats));
         
     }
