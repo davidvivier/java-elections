@@ -12,7 +12,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 import modele.BulletinCourrier;
 import modele.BulletinElectronique;
 import modele.BulletinPapier;
@@ -29,6 +31,46 @@ import modele.Vote;
  */
 public class Elections {
 
+    public static void jeuSetMap(TreeMap<Civilite,List<Candidat>> tm) {
+        
+       System.out.println(tm.get(Civilite.HOMME).size());
+       
+       Set<Civilite> sc = new TreeSet<>();
+       
+       for(Map.Entry<?, ?> entry : tm.entrySet()) {
+            sc.add((Civilite) entry.getKey());
+        }
+         
+       System.out.println(sc);
+       
+       tm.remove(Civilite.FEMME);
+       
+    }
+    
+    
+    
+    
+    public static TreeMap<Civilite,List<Candidat>> creMapCiviliteCandidat(List<Candidat> l) {
+        Map<Civilite,List<Candidat>> tMapCiviliteCandidat = new TreeMap<>() ;
+        
+        for (Candidat c : l)
+        {
+            if (tMapCiviliteCandidat.containsKey(c.getCivilite())) { //cas ou des candidats du parti existent
+                
+                tMapCiviliteCandidat.get(c.getCivilite()).add(c);
+                
+            } else {
+                
+                List<Candidat> list = new ArrayList<>();
+                list.add(c);
+                tMapCiviliteCandidat.put(c.getCivilite(), list);
+                
+            }
+        }
+        
+        return (TreeMap<Civilite,List<Candidat>>) tMapCiviliteCandidat;
+    }
+    
     public static TreeMap<String,List<Candidat>> creMapPartiCandidat(List<Candidat> l) {
         Map<String,List<Candidat>> tMapPartiCandidat = new TreeMap<>() ;
         

@@ -12,8 +12,10 @@ import modele.HommePolitique;
 import modele.Scrutin;
 import elections.Elections;
 import static elections.Elections.afficheMap;
+import static elections.Elections.creMapCiviliteCandidat;
 import static elections.Elections.creMapPartiCandidat;
 import static elections.Elections.creMapPartiPourcent;
+import static elections.Elections.jeuSetMap;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
@@ -52,5 +54,11 @@ public class ElectionLauncher {
         TreeMap<String,List<Candidat>> tMapPartiCandidat = creMapPartiCandidat(l1);
         
         afficheMap(tMapPartiCandidat);
+        
+        TreeMap<Civilite,List<Candidat>>  tMapCiviliteCandidat = creMapCiviliteCandidat(l1);
+        
+        afficheMap(tMapCiviliteCandidat);
+        
+        jeuSetMap(tMapCiviliteCandidat);
     }
 }
