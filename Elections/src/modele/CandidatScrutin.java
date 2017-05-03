@@ -108,9 +108,10 @@ public class CandidatScrutin implements Comparable<CandidatScrutin> {
         return this.hommePolitique.equals(hommePolitique);
     }
 
-    private HommePolitique getHommePolitique() {
+    public HommePolitique getHommePolitique() {
         return hommePolitique;
     }
+    
 
     /**
      * Ajoute une voix en faveur du candidat

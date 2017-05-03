@@ -8,6 +8,7 @@ package elections;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -28,20 +29,59 @@ import modele.Vote;
  */
 public class Elections {
 
-    public static void creMapCandidatImages(Map<HommePolitique,String> m) {
+    public static TreeMap<String,List<Candidat>> creMapPartiCandidat(List<Candidat> l) {
+        Map<String,List<Candidat>> tMapPartiCandidat = new TreeMap<>() ;
         
+        for (Candidat c : l)
+        {
+            if (tMapPartiCandidat.containsKey(c.getNomParti())) { //cas ou des candidats du parti existent
+                
+                tMapPartiCandidat.get(c.getNomParti()).add(c);
+                
+            } else {
+                
+                List<Candidat> list = new ArrayList<>();
+                list.add(c);
+                tMapPartiCandidat.put(c.getNomParti(), list);
+                
+            }
+        }
+        
+        return (TreeMap<String,List<Candidat>>) tMapPartiCandidat;
     }
     
-    public static void afficheMapHommeImages(Map<HommePolitique,String> m) {
+    public static TreeMap<String,Double> creMapPartiPourcent(List<Candidat> l) {
+        Map<String,Double> tMapPartiPourcent = new TreeMap<>() ;
+        
+        for (Candidat c : l)
+        {
+            tMapPartiPourcent.put(c.getNomParti(),c.getPourcentVoix() );
+        }
+        
+        return (TreeMap<String,Double>) tMapPartiPourcent;
+    }
+    
+    public static HashMap<Candidat,String> creMapCandidatImages(List<Candidat> l , Map<HommePolitique,String> mapHommeImage ) {
+        Map<Candidat,String> hMapCandiatImage = new HashMap<>() ;
+        
+        for (Candidat c : l)
+        {
+            hMapCandiatImage.put(c, mapHommeImage.get(c.getHommePolitique()) );
+        }
+        
+        return (HashMap<Candidat, String>) hMapCandiatImage;
+    }
+    
+    public static void afficheMap(Map<?,?> m) {
         String str ="";
-        for(Map.Entry<HommePolitique,String> entry : m.entrySet()) {
+        for(Map.Entry<?, ?> entry : m.entrySet()) {
             str += entry.getKey() + " , " + entry.getValue()+"\n";
         }
         
         System.out.println(str);
     }
     
-    public static Map<HommePolitique,String> creMapImages() {
+    public static TreeMap<HommePolitique,String> creMapImages() {
         List<HommePolitique> hommePolitiques = new ArrayList< >();
         hommePolitiques.add(new HommePolitique(Civilite.HOMME, "Tarek Oxlama", "parti1"));
         hommePolitiques.add(new HommePolitique(Civilite.HOMME, "Nicolai Tarcozi", "parti2"));
@@ -65,19 +105,21 @@ public class Elections {
         for(int i=0 ; i<7 ; i++) {
             mapHommesImages.put(hommePolitiques.get(i), images.get(i));
         }
-        return mapHommesImages;
+        return (TreeMap<HommePolitique, String>) mapHommesImages;
         
     }
     
-    public static void afficheSimulationTrie(String typeTri) {
+    public static List<Candidat> afficheSimulationTrie(String typeTri) {
+        List<Candidat> l = null;
         if (typeTri.equals("alphabétique")){
-            afficheResultatsVotes(1);
+            l = afficheResultatsVotes(1);
         }else if (typeTri.equals("pourcentage")) {
-            afficheResultatsVotes(2);
+            l = afficheResultatsVotes(2);
         }
+        return l;
     }
     
-    private static void afficheResultatsVotes(int typeTri){
+    private static List<Candidat> afficheResultatsVotes(int typeTri){
         //on lance la simulation
         int dateSrutin;
         int population;
@@ -113,7 +155,7 @@ public class Elections {
         
         
         System.out.println(toStringListCandidats(listeCandidats));
-        
+        return listeCandidats;
     }
     
     private static String toStringListCandidats(List<Candidat> lc)

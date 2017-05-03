@@ -5,7 +5,6 @@
  */
 package modele;
 
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -92,6 +91,10 @@ public final class Candidat implements Comparable<Candidat> {
             throw new NullPointerException();
         }
         return comp;
+    }
+    
+    public HommePolitique getHommePolitique() {
+        return this.candidatScrutin.getHommePolitique();
     }
     
     
