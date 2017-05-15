@@ -5,9 +5,13 @@ import javax.swing.JFrame;
 
 import elections.Elections;
 import java.awt.Color;
+import java.awt.MenuBar;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 public class ElectionGui extends JFrame {
@@ -24,6 +28,8 @@ public class ElectionGui extends JFrame {
         this.init(titreFenetre, election, imageAccueil);
         
         mettreEnForme();
+        ajouterMenu();
+        
     }
     
     private void init(String titreFenetre, Elections election, String imageAccueil) {
@@ -41,5 +47,31 @@ public class ElectionGui extends JFrame {
         label.setIcon(icone);
         
         getContentPane().add(label);
+    }
+    
+    private void ajouterMenu() {
+        JMenuBar menuBar = new JMenuBar();
+        //menuBar.setAlignmentY(TOP_ALIGNMENT);
+        
+        JMenu menu1 = new JMenu("Résultat Election");
+            menu1.add(new JMenuItem("Après simulation"));
+            menu1.add(new JMenuItem("Après gestion d'un scrutin"));
+        menuBar.add(menu1);
+        
+        JMenu menu2 = new JMenu("Préférence");
+            JMenu sousMenu = new JMenu("Ordre d'affichage des résultats");
+                sousMenu.add(new JMenuItem("Selon ordre alpha"));
+                sousMenu.add(new JMenuItem("Selon ordre des résultats obtenus"));
+            menu2.add(sousMenu);
+            menu2.add(new JMenuItem("Couleur des libellés"));
+            menu2.add(new JMenuItem("Couleur du panneau West"));
+            menu2.add(new JMenuItem("Taille police libellés"));
+        menuBar.add(menu2);
+        
+        JMenu menu3 = new JMenu("Gestion d'un scrutin");
+        
+        menuBar.add(menu3);
+        
+        setJMenuBar(menuBar);
     }
 }

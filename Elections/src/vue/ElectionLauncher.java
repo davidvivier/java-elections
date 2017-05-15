@@ -21,7 +21,6 @@ public class ElectionLauncher {
 		File g=new File("");
 		String imageAccueil = g.getAbsolutePath()+"\\src\\images\\felixCat.gif" ; 
                 
-		System.out.println(g.getAbsolutePath());
 		Elections election = new Elections();
 		
 		JFrame frame;
