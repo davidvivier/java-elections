@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 
 import elections.Elections;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.MenuBar;
 import javax.swing.Icon;
@@ -29,7 +30,7 @@ public class ElectionGui extends JFrame {
         
         mettreEnForme();
         ajouterMenu();
-        
+        afficherResultat();
     }
     
     private void init(String titreFenetre, Elections election, String imageAccueil) {
@@ -73,5 +74,24 @@ public class ElectionGui extends JFrame {
         menuBar.add(menu3);
         
         setJMenuBar(menuBar);
+    }
+    
+    private void afficherResultat() {
+        
+        JPanel panel = new JPanel();
+        BorderLayout layout = new BorderLayout();
+        panel.setLayout(layout);
+        
+            JPanel panelWest = new JPanel();
+            JPanel panelCenter = new JPanel();
+            
+            panelWest.setBackground(Color.yellow);
+            
+            panelCenter.setBackground(Color.red);
+            
+            panel.add(panelWest, BorderLayout.WEST);
+            panel.add(panelCenter, BorderLayout.CENTER);
+            
+        setContentPane(panel);
     }
 }
