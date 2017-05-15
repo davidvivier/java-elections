@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import elections.Elections;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.GridLayout;
 import java.awt.MenuBar;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -86,8 +87,14 @@ public class ElectionGui extends JFrame {
             JPanel panelCenter = new JPanel();
             
             panelWest.setBackground(Color.yellow);
+            panelWest.add(new JLabel("West"));
             
             panelCenter.setBackground(Color.red);
+            panelCenter.setLayout(new GridLayout(2,2));
+            panelCenter.add(new JLabel("Center 1"));
+            panelCenter.add(new JLabel("Center 2"));
+            panelCenter.add(new JLabel("Center 3"));
+            panelCenter.add(new JLabel("Center 4"));
             
             panel.add(panelWest, BorderLayout.WEST);
             panel.add(panelCenter, BorderLayout.CENTER);
