@@ -26,7 +26,7 @@ public class ElectionLauncher {
 		JFrame frame;
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		dim.height -= 30;
-                /*
+                
 		frame = new ElectionGui("Résultat des élections", election, imageAccueil);
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -34,6 +34,6 @@ public class ElectionLauncher {
 		frame.setPreferredSize(dim);
 		frame.pack();
 		frame.setVisible(true);
-                        */
+                        
 	}
 }
