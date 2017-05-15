@@ -53,7 +53,7 @@ public final class Candidat implements Comparable<Candidat> {
         return true;
     }
 
-    public double getPourcentVoix() {
+    public double getPourCentVoix() {
         return pourcentVoix;
     }
 
@@ -95,6 +95,10 @@ public final class Candidat implements Comparable<Candidat> {
     
     public HommePolitique getHommePolitique() {
         return this.candidatScrutin.getHommePolitique();
+    }
+
+    public boolean containsHommePolitique(HommePolitique hommePolitique) {
+        return (this.getHommePolitique().equals(hommePolitique));
     }
     
     

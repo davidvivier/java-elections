@@ -13,6 +13,11 @@ import java.util.List;
  *
  * @author david.vivier
  */
+/**
+ * Scrutin : mise en oeuvre d'une élection pour un certain nombre de
+ * candidatScrutins, les votes se font par bulletin papier ou électronique ou
+ * courrier
+ */
 public class Scrutin {
 
     private List<CandidatScrutin> candidatScrutins;
@@ -65,7 +70,8 @@ public class Scrutin {
     }
 
     /**
-     * @param hommePolitique
+     * @param hommesPolitique crée 1 candidatScrutin à partir d'1
+     * HommePolitique, et l' ajoute dans la liste
      */
     public void addCandidatScrutin(HommePolitique hommePolitique) {
         CandidatScrutin candidatScrutin = null;
@@ -101,6 +107,19 @@ public class Scrutin {
         }
     }
 
+    /**
+     * @return liste de Candidat qui sont une vue reprenant le nom, parti et %
+     * de voix du candidat
+     */
+    public List<Candidat> resultList() {
+        List<Candidat> candidats = null;
+        candidats = new ArrayList<Candidat>();
+        for (CandidatScrutin candidatScrutin : candidatScrutins) {
+            candidats.add(new Candidat(candidatScrutin, nbVotesValides));
+        }
+        return candidats;
+    }
+
     public double tauxParticipation() {
         double ret = 0;
         ret = nbVotesValides * 100.0 / getPopulation();
@@ -132,18 +151,6 @@ public class Scrutin {
                 + String.format("Taux de participation avec vote valide=%2.1f", taux) + "%"
                 + "\ncandidatScrutins =" + candidatScrutins + "]";
         return ret;
-    }
-    
-    public List<Candidat> resultCandidatToArrayList() {
-        List<Candidat> listeCandidat = new ArrayList<>();
-        for(CandidatScrutin cs : candidatScrutins)
-        {
-            Candidat c = new Candidat(cs,this.nbVotesValides);
-            listeCandidat.add(c);
-        }
-        
-        return listeCandidat;
-        
     }
 
 }

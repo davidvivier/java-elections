@@ -11,18 +11,21 @@ import java.util.Comparator;
  *
  * @author Kevin
  */
-public class CandidatComparator implements Comparator<Candidat> {
+/**
+*
+* Comparateur de candidat qui compare les % de voix par ordre décroissant  
+*/
+public class CandidatComparator <T> {
 
-    @Override
-    public int compare(Candidat c1, Candidat c2) {
-        if (c1.getPourcentVoix() < c2.getPourcentVoix()) {
-            return 1;
-        }
-        else if (c1.getPourcentVoix() > c2.getPourcentVoix()){
-            return -1;
-        } else {
-            return 0 ;
-        }
-    }
-
+	public static final Comparator<Candidat> POURCENTVOIX = new Comparator<Candidat>(){
+               
+		@Override
+		public int compare(Candidat o1, Candidat o2)
+		{
+			if ((o1 != null) && (o2 != null) && (o1 instanceof Candidat) && (o2 instanceof Candidat))
+				return ((Double)o2.getPourCentVoix()).compareTo((Double)o1.getPourCentVoix());
+			else
+				throw new ClassCastException();           
+		}
+	};
 }

@@ -5,12 +5,16 @@
  */
 package elections;
 
+import java.io.File;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.NavigableSet;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
@@ -21,6 +25,7 @@ import modele.BulletinPapier;
 import modele.Candidat;
 import modele.CandidatComparator;
 import modele.Civilite;
+import modele.DisplayOrder;
 import modele.HommePolitique;
 import modele.Scrutin;
 import modele.Vote;
@@ -30,250 +35,307 @@ import modele.Vote;
  * @author Kevin
  */
 public class Elections {
+	private Scrutin scrutin;
+	private int dateSrutin;	
+	private int population;
+	private int votants;
+	private int dateBulletin;
+	private List< HommePolitique> hommePolitiques;
+	private List<String> imageHommePolitique;
+	private List<Candidat> candidats;
+	private Map<HommePolitique, String>  mapHommePolitique_Image;
 
-    public static void jeuSetMap(TreeMap<Civilite,List<Candidat>> tm) {
-        
-       System.out.println(tm.get(Civilite.HOMME).size());
-       
-       Set<Civilite> sc = new TreeSet<>();
-       
-       for(Map.Entry<?, ?> entry : tm.entrySet()) {
-            sc.add((Civilite) entry.getKey());
-        }
-         
-       System.out.println(sc);
-       
-       tm.remove(Civilite.FEMME);
-       
-    }
-    
-    
-    
-    
-    public static TreeMap<Civilite,List<Candidat>> creMapCiviliteCandidat(List<Candidat> l) {
-        Map<Civilite,List<Candidat>> tMapCiviliteCandidat = new TreeMap<>() ;
-        
-        for (Candidat c : l)
-        {
-            if (tMapCiviliteCandidat.containsKey(c.getCivilite())) { //cas ou des candidats du parti existent
-                
-                tMapCiviliteCandidat.get(c.getCivilite()).add(c);
-                
-            } else {
-                
-                List<Candidat> list = new ArrayList<>();
-                list.add(c);
-                tMapCiviliteCandidat.put(c.getCivilite(), list);
-                
-            }
-        }
-        
-        return (TreeMap<Civilite,List<Candidat>>) tMapCiviliteCandidat;
-    }
-    
-    public static TreeMap<String,List<Candidat>> creMapPartiCandidat(List<Candidat> l) {
-        Map<String,List<Candidat>> tMapPartiCandidat = new TreeMap<>() ;
-        
-        for (Candidat c : l)
-        {
-            if (tMapPartiCandidat.containsKey(c.getNomParti())) { //cas ou des candidats du parti existent
-                
-                tMapPartiCandidat.get(c.getNomParti()).add(c);
-                
-            } else {
-                
-                List<Candidat> list = new ArrayList<>();
-                list.add(c);
-                tMapPartiCandidat.put(c.getNomParti(), list);
-                
-            }
-        }
-        
-        return (TreeMap<String,List<Candidat>>) tMapPartiCandidat;
-    }
-    
-    public static TreeMap<String,Double> creMapPartiPourcent(List<Candidat> l) {
-        Map<String,Double> tMapPartiPourcent = new TreeMap<>() ;
-        
-        for (Candidat c : l)
-        {
-            tMapPartiPourcent.put(c.getNomParti(),c.getPourcentVoix() );
-        }
-        
-        return (TreeMap<String,Double>) tMapPartiPourcent;
-    }
-    
-    public static HashMap<Candidat,String> creMapCandidatImages(List<Candidat> l , Map<HommePolitique,String> mapHommeImage ) {
-        Map<Candidat,String> hMapCandiatImage = new HashMap<>() ;
-        
-        for (Candidat c : l)
-        {
-            hMapCandiatImage.put(c, mapHommeImage.get(c.getHommePolitique()) );
-        }
-        
-        return (HashMap<Candidat, String>) hMapCandiatImage;
-    }
-    
-    public static void afficheMap(Map<?,?> m) {
-        String str ="";
-        for(Map.Entry<?, ?> entry : m.entrySet()) {
-            str += entry.getKey() + " , " + entry.getValue()+"\n";
-        }
-        
-        System.out.println(str);
-    }
-    
-    public static TreeMap<HommePolitique,String> creMapImages() {
-        List<HommePolitique> hommePolitiques = new ArrayList< >();
-        hommePolitiques.add(new HommePolitique(Civilite.HOMME, "Tarek Oxlama", "parti1"));
-        hommePolitiques.add(new HommePolitique(Civilite.HOMME, "Nicolai Tarcozi", "parti2"));
-        hommePolitiques.add(new HommePolitique(Civilite.HOMME, "Vlad Imirboutine", "parti3"));
-        hommePolitiques.add(new HommePolitique(Civilite.FEMME, "Angel Anerckjel", "parti4"));
-        hommePolitiques.add(new HommePolitique(Civilite.FEMME, "Chuck Norris", "Violence"));
-        hommePolitiques.add(new HommePolitique(Civilite.HOMME, "Sylvain Durrif", "L'homme Vert"));
-        hommePolitiques.add(new HommePolitique(Civilite.HOMME, "Eddi Malou", "Congolexicomatisation"));
-        
-        List<String> images = new ArrayList<>() ;
-        images.add("../images/gif/bunny.gif");
-        images.add("../images/gif/cricket.gif");
-        images.add("../images/gif/fantome.gif");
-        images.add("../images/gif/felixCat.gif");
-        images.add("../images/gif/minnie.gif");
-        images.add("../images/gif/schtroumpfs.gif");
-        images.add("../images/gif/sorciere.gif");
-        
-        Map<HommePolitique,String> mapHommesImages = new TreeMap<>();
-        
-        for(int i=0 ; i<7 ; i++) {
-            mapHommesImages.put(hommePolitiques.get(i), images.get(i));
-        }
-        return (TreeMap<HommePolitique, String>) mapHommesImages;
-        
-    }
-    
-    public static List<Candidat> afficheSimulationTrie(String typeTri) {
-        List<Candidat> l = null;
-        if (typeTri.equals("alphabétique")){
-            l = afficheResultatsVotes(1);
-        }else if (typeTri.equals("pourcentage")) {
-            l = afficheResultatsVotes(2);
-        }
-        return l;
-    }
-    
-    private static List<Candidat> afficheResultatsVotes(int typeTri){
-        //on lance la simulation
-        int dateSrutin;
-        int population;
-        int votants;
-        int dateBulletin;
-        List< HommePolitique> hommePolitiques;
+	public Elections() {
+		super();
+		scrutin = null;
+		dateSrutin = 0;		
+		population = 0;
+		votants = 0;
+		dateBulletin = 0;	
+	}
 
-        hommePolitiques = new ArrayList< >();
-        hommePolitiques.add(new HommePolitique(Civilite.HOMME, "Tarek Oxlama", "parti1"));
-        hommePolitiques.add(new HommePolitique(Civilite.HOMME, "Nicolai Tarcozi", "parti2"));
-        hommePolitiques.add(new HommePolitique(Civilite.HOMME, "Vlad Imirboutine", "parti3"));
-        hommePolitiques.add(new HommePolitique(Civilite.FEMME, "Angel Anerckjel", "parti4"));
-        hommePolitiques.add(new HommePolitique(Civilite.FEMME, "Chuck Norris", "Violence"));
-        hommePolitiques.add(new HommePolitique(Civilite.HOMME, "Sylvain Durrif", "L'homme Vert"));
-        hommePolitiques.add(new HommePolitique(Civilite.HOMME, "Eddi Malou", "Congolexicomatisation"));
-        
 
-        dateSrutin = 15;
-        population = 30;
-        votants = 20;
-        dateBulletin = 13;
-        
-        Scrutin scrutinSimule = simulerVotes(hommePolitiques,votants,dateSrutin,dateBulletin,population);
-        scrutinSimule.countTheVotes();
-        List<Candidat> listeCandidats = scrutinSimule.resultCandidatToArrayList();
-        
-        if (typeTri == 2)
-        {
-            Collections.sort(listeCandidats, new CandidatComparator());
-        } else if (typeTri == 1) {
-            Collections.sort(listeCandidats);
-        }
-        
-        
-        System.out.println(toStringListCandidats(listeCandidats));
-        return listeCandidats;
-    }
-    
-    private static String toStringListCandidats(List<Candidat> lc)
-    {
-        String str = "";
-        for (Candidat c : lc)
-        {
-            str += c.toString();
-            str +="\n";
-        }
-        return str;
-        
-    }
+	/**
+	 * @return the dateSrutin
+	 */
+	public int getDateSrutin() {
+		return dateSrutin;
+	}
 
-    private static Scrutin simulerVotes(List< HommePolitique> hommePolitiques, int votants,
-            int dateSrutin, int dateBulletin, int population) {
+	/**
+	 * @return the liste de candidats
+	 */
+	public List<Candidat> getCandidats() {
+		return candidats;
+	}
 
-        Scrutin scrutin = new Scrutin(hommePolitiques, population, dateSrutin);
+	/**
+	 *  
+	 * Simulation d'un scrutin
+	 * @return the liste de candidats
+	 */
+	public List<Candidat>  simulation(DisplayOrder displayOrder) {
 
-        // ou bien
-        //		scrutin = new Scrutin(population, dateSrutin);
-        //		for (HommePolitique hommePolitique : hommePolitiques )
-        //			scrutin.addCandidat(hommePolitique);
-        //System.out.println(scrutin);
-        if (hommePolitiques != null) {
-            for (int i = 0; i < votants; ++i) {
+		initSimulation();
 
-                int candNum = Utils.randomInt(hommePolitiques.size());
-                Vote vote = null;
+		candidats = resultScrutin();		
 
-                // bulletins papiers impairs sont signés, pairs sont non signés
-                boolean signature = true;
-                if ((i % 2) == 0) {
-                    signature = false;
-                }
+		candidats = sortCandidats(displayOrder);		
 
-                // simulation création bulletins de vote
-                switch (i % 3) {
-                    case 0: {
-                        vote = new BulletinElectronique(hommePolitiques.get(candNum), dateBulletin, dateSrutin);
-                        break;
-                    }
-                    case 1: {
-                        vote = new BulletinPapier(hommePolitiques.get(candNum), dateBulletin, dateSrutin, signature);
-                        break;
-                    }
-                    case 2: {
-                        vote = new BulletinCourrier(hommePolitiques.get(candNum), dateBulletin, dateSrutin, signature);
-                    }
-                    default: // nothing			
-                }
-                //	System.out.println(vote);		// pour vérif ToString() des classes qui implémentent Vote
-                scrutin.addBulletin(vote);
-            }
-        }
-        return scrutin;
-    }
+		return candidats;
+	}
+
+	/**
+	 *  
+	 * initialise la simulation
+	 */
+	private void initSimulation() {
+
+		imageHommePolitique = new ArrayList<String>();
+		hommePolitiques = new ArrayList< HommePolitique>();
+		mapHommePolitique_Image = new TreeMap<HommePolitique, String>();
+
+		hommePolitiques.add(new HommePolitique(Civilite.HOMME, "Tarek Oxlama", "Parti1"));
+		hommePolitiques.add(new HommePolitique(Civilite.HOMME,"Nicolai Tarcozi", "Parti2"));
+		hommePolitiques.add(new HommePolitique(Civilite.HOMME,"Vlad Imirboutine", "Parti1"));
+		hommePolitiques.add(new HommePolitique(Civilite.FEMME,"Angel Anerckjel", "Parti4"));
+		hommePolitiques.add(new HommePolitique(Civilite.FEMME,"Anne SanSoossi", "Parti5"));
+
+		String[] tab = {"bugsBunny.gif", "fantome.gif", "schtroumpfs.gif","sorciere.gif", "cricket.gif"};
+		File g=new File("");
+		String imagePath = g.getAbsolutePath()+"\\images\\";
+		for (int i = 0; i< tab.length; i++){
+			String imageName = imagePath + tab[i];
+			imageHommePolitique.add(imageName);
+		}
+
+		scrutin = null;
+		dateSrutin = 15;		
+		population = 30;
+		votants = 20;
+		dateBulletin = 13;
+
+
+		/**
+		 * Association des hommes politiques et de leur image
+		 */
+		if (hommePolitiques.size()!=0 && imageHommePolitique.size()!=0){
+			for (int i = 0; i< hommePolitiques.size(); i++) {  	
+				mapHommePolitique_Image.put(hommePolitiques.get(i), imageHommePolitique.get(i));
+			}
+		}
+	}
+	/** 
+	 * Lance une simulation
+	 * dépouille les votes
+	 * retourne le résultat
+	 */
+	private List<Candidat> resultScrutin(){
+
+		/**
+		 * simulation votes
+		 */
+		scrutin = simulerVotes(hommePolitiques, votants, dateSrutin, dateBulletin, population);
+
+		/**
+		 * Traitement après vote
+		 */
+		scrutin.countTheVotes();
+
+		/**
+		 * Récupération résultat sous forme de liste de Candidat
+		 */
+		candidats = scrutin.resultList();
+
+		return candidats;
+	}
+
+
+	/**
+	 * 		Simulation d'un scrutin 
+	 *  	tous les votes sont envoyés à la même date
+	 *  	Tous passent le check de date 
+	 *  	1 bulletins papier sur 2 passe le check de signature
+	 */	
+	private static Scrutin simulerVotes(List< HommePolitique> hommePolitiques, int votants,
+			int dateSrutin, int dateBulletin, int population) {
+
+		Scrutin scrutin = new Scrutin(hommePolitiques, population, dateSrutin);
+		Vote vote = null;
+		//System.out.println(scrutin);		// pour vérif
+
+		if (hommePolitiques!=null){
+			for (int i = 0; i < votants; ++i) {
+
+				int candNum = Utils.randomInt(hommePolitiques.size());
+
+				// bulletins papiers impairs sont signés, pairs sont non signés
+				boolean signature = true;
+				if ((i % 2) == 0) {
+					signature = false;
+				}
+
+				// simulation création bulletins de vote
+				switch (i % 3) {
+				case 0:{
+					vote = new BulletinElectronique(hommePolitiques.get(candNum), dateBulletin, dateSrutin);			
+					break;
+				}			
+				case 1:{
+					vote = new BulletinPapier(hommePolitiques.get(candNum), dateBulletin, dateSrutin, signature);
+					break;
+				}
+				case 2:{
+					vote = new BulletinCourrier(hommePolitiques.get(candNum), dateBulletin, dateSrutin, signature);
+				}
+				default: // nothing			
+				}
+				//System.out.println(vote);		// pour vérif
+				scrutin.addBulletin( vote);				
+			}
+		}
+		return scrutin;
+	}
+
+
+	/**
+	 * @param displayOrder 
+	 * Tri candidats selon displayOrder
+	 * @return 
+	 */
+	public List<Candidat> sortCandidats(DisplayOrder displayOrder) {
+		if (candidats != null) {
+			if (displayOrder != null){
+				if (displayOrder.equals(DisplayOrder.ALPHA)){
+					Collections.sort(candidats);
+				}
+				if (displayOrder.equals(DisplayOrder.POURCENT)){
+					Collections.sort(candidats, CandidatComparator.POURCENTVOIX);
+				}
+				if (displayOrder.equals(DisplayOrder.PARTI)){
+					Collections.sort(candidats, CandidatComparator.POURCENTVOIX);
+				}
+			}
+		}	
+		return candidats;
+	}
+
+	/**
+	 * @return the mapImage qui associe les candidats et l'image
+	 * de l'homme politique correspondant
+	 */
+	public Map<Candidat, String> newMapCandidatImage() {
+
+		Map<Candidat, String> map = new HashMap<Candidat, String>();
+
+		for (Entry<HommePolitique, String> e : mapHommePolitique_Image.entrySet()){
+
+			HommePolitique hommePolitique = e.getKey();
+			String imageName = e.getValue();
+
+			for (Candidat candidat : candidats) {  	
+				if (candidat.containsHommePolitique(hommePolitique)){
+					map.put(candidat, imageName);
+				}
+			}
+		}		
+		return map;
+	}
+
+	/**
+	 * @return map qui associe à chaque civilité
+	 * la liste des candidats correspondants
+	 */
+	public Map<Civilite, List<Candidat>> newMapCiviliteCandidats() {
+
+		Map<Civilite, List<Candidat>> map  = 
+			new TreeMap<Civilite, List<Candidat>>();
+		List<Candidat> candidatsInMap = null;
+
+		for (Candidat candidat : candidats) {  				
+			candidatsInMap = map.get(candidat.getCivilite());
+			//si cette cle n'existe pas dans la Map, on cree un nouvel element
+			if(candidatsInMap == null){
+				candidatsInMap = new LinkedList<Candidat>();
+			}
+			//et on inclut l'HommePolitique enveloppé dans le Candidat dans la liste 
+			candidatsInMap.add(candidat);
+			//puis l'element dans la Map
+			map.put(candidat.getCivilite(), candidatsInMap);
+		}
+		return map;
+	}
+
+
+
+
+	/**
+	 * @return map qui associe à chaque parti
+	 * le pourcentage de voix obtenu
+	 */
+	public Map<String, Double> newMapPartiPourcent() {
+
+		Map<String, Double> map  = 	new TreeMap<String, Double>();			 
+		Double pourcentCandidat = null;
+		double pourcent = 0;
+
+		for (Candidat candidat : candidats) {  
+
+			pourcentCandidat = map.get(candidat.getNomParti());
+			//si cette cle n'existe pas dans la Map, on initialise le cumul
+			if (pourcentCandidat == null){
+				pourcent = 0;
+			}
+			else {
+				pourcent = pourcentCandidat.doubleValue() ;
+			}			
+			pourcent +=  candidat.getPourCentVoix();
+			map.put(candidat.getNomParti(), pourcent);
+		}
+		return map;
+	}
+
+	/**
+	 * @return map qui associe à chaque parti
+	 * la liste des candidats correspondants
+	 */
+	public Map<String, List<Candidat>> newMapPartiCandidats() {
+
+		Map<String, List<Candidat>> map  = 
+			new TreeMap<String, List<Candidat>>();
+		List<Candidat> candidatsInMap = null;
+
+		for (Candidat candidat : candidats) {  				
+			candidatsInMap = map.get(candidat.getNomParti());
+			//si cette cle n'existe pas dans la Map, on cree un nouvel element
+			if(candidatsInMap == null){
+				candidatsInMap = new LinkedList<Candidat>();
+			}
+			//et on inclut l'HommePolitique enveloppé dans le Candidat dans la liste 
+			candidatsInMap.add(candidat);
+			//puis l'element dans la Map
+			map.put(candidat.getNomParti(), candidatsInMap);
+		}
+		return map;
+	}
+
 }
 
-
-
 /**
- * Classe utilitaire
+ * Classe utilitaire de génération de nb aléatoire
  *
  */
 class Utils {
 
-    private static final Random RANDOM = new Random();
+	private static final Random RANDOM = new Random();
 
-    // initialise le générateur de nombres aléatoires
-    public static void setSeed(long seed) {
-        RANDOM.setSeed(seed);
-    }
+	// initialise le générateur de nombres aléatoires
+	public static void setSeed(long seed) {
+		RANDOM.setSeed(seed);
+	}
 
-    // génère un entier entre 0 et max (max non compris)
-    public static int randomInt(int max) {
-        return RANDOM.nextInt(max);
-    }
+	// génère un entier entre 0 et max (max non compris)
+	public static int randomInt(int max) {
+		return RANDOM.nextInt(max);
+	}
 }
