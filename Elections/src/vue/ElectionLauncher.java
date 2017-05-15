@@ -19,8 +19,9 @@ public class ElectionLauncher {
     public static void main(String[] args) {
 
 		File g=new File("");
-		String imageAccueil = g.getAbsolutePath()+"\\images\\felixCat.gif" ; // à personnaliser
-		
+		String imageAccueil = g.getAbsolutePath()+"\\src\\images\\felixCat.gif" ; 
+                
+		System.out.println(g.getAbsolutePath());
 		Elections election = new Elections();
 		
 		JFrame frame;
@@ -33,6 +34,6 @@ public class ElectionLauncher {
 		frame.setPreferredSize(dim);
 		frame.pack();
 		frame.setVisible(true);
-                        
+                
 	}
 }
