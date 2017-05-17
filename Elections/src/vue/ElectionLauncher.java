@@ -24,7 +24,7 @@ public class ElectionLauncher {
 		Elections election = new Elections();
 		
 		JFrame frame;
-		Dimension dim = new Dimension(400, 400);
+		Dimension dim = new Dimension(700, 600);
                 
 		frame = new ElectionGui("Résultat des élections", election, imageAccueil);
 		
