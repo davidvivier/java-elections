@@ -96,7 +96,7 @@ public class ElectionGui extends JFrame {
         JMenu sousMenu = new JMenu("Ordre d'affichage des résultats");
                 menuOrdreAlpha = new JMenuItem("Selon ordre alpha");
                 sousMenu.add(menuOrdreAlpha);
-                menuOrdreResultats = new JMenuItem("Selon ordre des résultats obtenus");
+                menuOrdreResultats = new JMenuItem("Selon ordre décroissant des résultats");
                 sousMenu.add(menuOrdreResultats);
             menu2.add(sousMenu);
             menuCouleurLibelles = new JMenuItem("Couleur des libellés");
@@ -148,7 +148,7 @@ public class ElectionGui extends JFrame {
         
         Box vBox = Box.createVerticalBox();
         
-        DecimalFormat decimalFormat = new DecimalFormat(".##");
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
         
         // Titre du panneau
         vBox.add(new JLabel("Résultats du scrutin du " + date, (int) CENTER_ALIGNMENT));
@@ -178,11 +178,26 @@ public class ElectionGui extends JFrame {
         
         menuApresSimulation.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println("bouton cliqué");
+                System.out.println("bouton 'après simulation' cliqué");
                 
                 afficherResultat(resultats);
             }
         });
         
+        menuOrdreAlpha.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("bouton 'ordre alpha' cliqué");
+                
+                afficherResultat(election.sortCandidats(DisplayOrder.ALPHA));
+            }
+        });
+        
+        menuOrdreResultats.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("bouton 'ordre résultats' cliqué");
+                
+                afficherResultat(election.sortCandidats(DisplayOrder.POURCENT));
+            }
+        });
     }
 }
