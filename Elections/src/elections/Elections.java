@@ -103,7 +103,7 @@ public class Elections {
 
 		String[] tab = {"bugsBunny.gif", "fantome.gif", "schtroumpfs.gif","sorciere.gif", "cricket.gif"};
 		File g=new File("");
-		String imagePath = g.getAbsolutePath()+"\\images\\";
+		String imagePath = g.getAbsolutePath()+"\\src\\images\\";
 		for (int i = 0; i< tab.length; i++){
 			String imageName = imagePath + tab[i];
 			imageHommePolitique.add(imageName);
