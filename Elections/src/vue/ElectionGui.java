@@ -25,6 +25,14 @@ public class ElectionGui extends JFrame {
     
     private JLabel label;
     
+    private JMenuItem menuApresSimulation;
+    private JMenuItem menuApresGestionScrutin;
+    private JMenuItem menuOrdreAlpha;
+    private JMenuItem menuOrdreResultats;
+    private JMenuItem menuCouleurLibelles;
+    private JMenuItem menuCouleurPanneauWest;
+    private JMenuItem menuTaillePoliceLibelles;
+    
     public ElectionGui(String titreFenetre, Elections election, String imageAccueil) {
         super(titreFenetre);
         this.init(titreFenetre, election, imageAccueil);
@@ -56,18 +64,25 @@ public class ElectionGui extends JFrame {
         //menuBar.setAlignmentY(TOP_ALIGNMENT);
         
         JMenu menu1 = new JMenu("Résultat Election");
-            menu1.add(new JMenuItem("Après simulation"));
-            menu1.add(new JMenuItem("Après gestion d'un scrutin"));
+            menuApresSimulation = new JMenuItem("Après simulation");
+            menu1.add(menuApresSimulation);
+            menuApresGestionScrutin = new JMenuItem("Après gestion d'un scrutin");
+            menu1.add(menuApresGestionScrutin);
         menuBar.add(menu1);
         
         JMenu menu2 = new JMenu("Préférence");
             JMenu sousMenu = new JMenu("Ordre d'affichage des résultats");
-                sousMenu.add(new JMenuItem("Selon ordre alpha"));
-                sousMenu.add(new JMenuItem("Selon ordre des résultats obtenus"));
+                menuOrdreAlpha = new JMenuItem("Selon ordre alpha");
+                sousMenu.add(menuOrdreAlpha);
+                menuOrdreResultats = new JMenuItem("Selon ordre des résultats obtenus");
+                sousMenu.add(menuOrdreResultats);
             menu2.add(sousMenu);
-            menu2.add(new JMenuItem("Couleur des libellés"));
-            menu2.add(new JMenuItem("Couleur du panneau West"));
-            menu2.add(new JMenuItem("Taille police libellés"));
+            menuCouleurLibelles = new JMenuItem("Couleur des libellés");
+            menu2.add(menuCouleurLibelles);
+            menuCouleurPanneauWest = new JMenuItem("Couleur du panneau West");
+            menu2.add(menuCouleurPanneauWest);
+            menuTaillePoliceLibelles = new JMenuItem("Taille police libellés");
+            menu2.add(menuTaillePoliceLibelles);
         menuBar.add(menu2);
         
         JMenu menu3 = new JMenu("Gestion d'un scrutin");
@@ -101,4 +116,5 @@ public class ElectionGui extends JFrame {
             
         setContentPane(panel);
     }
+
 }
