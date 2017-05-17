@@ -10,6 +10,7 @@ import java.awt.GridLayout;
 import java.awt.MenuBar;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -17,6 +18,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import modele.Candidat;
+import modele.DisplayOrder;
 
 public class ElectionGui extends JFrame {
 
@@ -35,6 +38,8 @@ public class ElectionGui extends JFrame {
     private JMenuItem menuCouleurPanneauWest;
     private JMenuItem menuTaillePoliceLibelles;
     
+    private List<Candidat> resultats;
+    
     public ElectionGui(String titreFenetre, Elections election, String imageAccueil) {
         super(titreFenetre);
         this.init(titreFenetre, election, imageAccueil);
@@ -46,6 +51,7 @@ public class ElectionGui extends JFrame {
         // on ajoute le listener
         addActionListenerMenu();
         
+        resultats = election.simulation(DisplayOrder.POURCENT);
     }
 
     private void init(String titreFenetre, Elections election, String imageAccueil) {
@@ -102,7 +108,7 @@ public class ElectionGui extends JFrame {
         setJMenuBar(menuBar);
     }
 
-    private void afficherResultat() {
+    private void afficherResultat(List<Candidat> candidats) {
         
         JPanel panel = new JPanel();
         BorderLayout layout = new BorderLayout();
@@ -134,7 +140,8 @@ public class ElectionGui extends JFrame {
         menuApresSimulation.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("bouton cliqué");
-                afficherResultat();
+                
+                afficherResultat(resultats);
             }
         });
         
