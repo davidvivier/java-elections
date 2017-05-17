@@ -41,7 +41,11 @@ public class ElectionGui extends JFrame {
 
         mettreEnForme();
         ajouterMenu();
-        afficherResultat();
+        //afficherResultat();
+        
+        // on ajoute le listener
+        addActionListenerMenu();
+        
     }
 
     private void init(String titreFenetre, Elections election, String imageAccueil) {
@@ -99,7 +103,7 @@ public class ElectionGui extends JFrame {
     }
 
     private void afficherResultat() {
-
+        
         JPanel panel = new JPanel();
         BorderLayout layout = new BorderLayout();
         panel.setLayout(layout);
@@ -121,14 +125,16 @@ public class ElectionGui extends JFrame {
         panel.add(panelCenter, BorderLayout.CENTER);
 
         setContentPane(panel);
+        
+        revalidate();
     }
 
     private void addActionListenerMenu() {
-        JMenuItem menuApresSimulation = new JMenuItem();
         
         menuApresSimulation.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("bouton cliqué");
+                afficherResultat();
             }
         });
         
