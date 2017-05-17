@@ -10,6 +10,7 @@ import java.awt.GridLayout;
 import java.awt.MenuBar;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -124,7 +125,7 @@ public class ElectionGui extends JFrame {
         panelCenter = new JPanel();
 
         panelWest.setBackground(Color.white);
-        panelWest.add(new JLabel("West"));
+        //panelWest.add(new JLabel("West"));
 
         panelCenter.setBackground(Color.red);
         panelCenter.setLayout(new GridLayout(2, 2));
@@ -147,6 +148,8 @@ public class ElectionGui extends JFrame {
         
         Box vBox = Box.createVerticalBox();
         
+        DecimalFormat decimalFormat = new DecimalFormat(".##");
+        
         // Titre du panneau
         vBox.add(new JLabel("Résultats du scrutin du " + date, (int) CENTER_ALIGNMENT));
         
@@ -157,7 +160,14 @@ public class ElectionGui extends JFrame {
                 String imagePath = mapCandidatImage.get(candidat);
                 JLabel labelImage = new JLabel(new ImageIcon(imagePath));
                 box.add(labelImage);
-            
+                
+                Box vBoxDetails = Box.createVerticalBox();
+                vBoxDetails.add(new JLabel(candidat.getCivilite().toString()));
+                vBoxDetails.add(new JLabel(candidat.getNom().toString()));
+                vBoxDetails.add(new JLabel(candidat.getNomParti().toString()));
+                vBoxDetails.add(new JLabel(decimalFormat.format(candidat.getPourCentVoix()) + "% des voix"));
+                box.add(vBoxDetails);
+                
             vBox.add(box);
         }
         
