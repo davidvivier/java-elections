@@ -10,7 +10,10 @@ import java.awt.GridLayout;
 import java.awt.MenuBar;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import javax.swing.Box;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -29,6 +32,9 @@ public class ElectionGui extends JFrame {
     private ImageIcon icone;
 
     private JLabel label;
+    
+    private JPanel panelWest;
+    private JPanel panelCenter;
 
     private JMenuItem menuApresSimulation;
     private JMenuItem menuApresGestionScrutin;
@@ -114,10 +120,10 @@ public class ElectionGui extends JFrame {
         BorderLayout layout = new BorderLayout();
         panel.setLayout(layout);
 
-        JPanel panelWest = new JPanel();
-        JPanel panelCenter = new JPanel();
+        panelWest = new JPanel();
+        panelCenter = new JPanel();
 
-        panelWest.setBackground(Color.yellow);
+        panelWest.setBackground(Color.white);
         panelWest.add(new JLabel("West"));
 
         panelCenter.setBackground(Color.red);
@@ -132,7 +138,30 @@ public class ElectionGui extends JFrame {
 
         setContentPane(panel);
         
+        remplirPanneauWest(resultats, election.newMapCandidatImage(), election.getDateSrutin());
+        
         revalidate();
+    }
+    
+    private void remplirPanneauWest(List<Candidat> resultats, Map<Candidat, String> mapCandidatImage, int date) {
+        
+        Box vBox = Box.createVerticalBox();
+        
+        // Titre du panneau
+        vBox.add(new JLabel("Résultats du scrutin du " + date, (int) CENTER_ALIGNMENT));
+        
+        List<Box> hBoxes = new ArrayList<>(resultats.size());
+        
+        for (Candidat candidat : resultats) {
+            Box box = Box.createHorizontalBox();
+                String imagePath = mapCandidatImage.get(candidat);
+                JLabel labelImage = new JLabel(new ImageIcon(imagePath));
+                box.add(labelImage);
+            
+            vBox.add(box);
+        }
+        
+        panelWest.add(vBox);
     }
 
     private void addActionListenerMenu() {
