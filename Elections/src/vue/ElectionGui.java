@@ -24,6 +24,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import modele.Candidat;
 import modele.DisplayOrder;
+import org.jfree.chart.*;
+import org.jfree.data.general.DefaultPieDataset;
 
 public class ElectionGui extends JFrame {
 
@@ -126,10 +128,14 @@ public class ElectionGui extends JFrame {
 
         panelWest.setBackground(Color.white);
         //panelWest.add(new JLabel("West"));
+        
+        remplirPanneauWest(resultats, election.newMapCandidatImage(), election.getDateSrutin());
 
         panelCenter.setBackground(Color.red);
         panelCenter.setLayout(new GridLayout(2, 2));
-        panelCenter.add(new JLabel("Center 1"));
+        
+        
+        panelCenter.add(resultatParCandidat());
         panelCenter.add(new JLabel("Center 2"));
         panelCenter.add(new JLabel("Center 3"));
         panelCenter.add(new JLabel("Center 4"));
@@ -139,7 +145,6 @@ public class ElectionGui extends JFrame {
 
         setContentPane(panel);
         
-        remplirPanneauWest(resultats, election.newMapCandidatImage(), election.getDateSrutin());
         
         revalidate();
     }
@@ -173,7 +178,23 @@ public class ElectionGui extends JFrame {
         
         panelWest.add(vBox);
     }
-
+    
+    private JPanel resultatParCandidat() {
+        
+        DefaultPieDataset dataset = new DefaultPieDataset();
+        for (Candidat candidat : resultats) {
+            dataset.setValue(candidat.getNom(), candidat.getPourCentVoix());
+        }
+        
+        JFreeChart chart = ChartFactory.createPieChart("Résultat par candidat",
+                dataset,
+                true,
+                true,
+                false);
+        
+        return new ChartPanel(chart);
+    }
+    
     private void addActionListenerMenu() {
         
         menuApresSimulation.addActionListener(new ActionListener() {
