@@ -142,7 +142,7 @@ public class ElectionGui extends JFrame {
         panelCenter.add(resultatsParCandidat(election.getDateSrutin()));
         panelCenter.add(resultatsParParti(election.getDateSrutin()));
         panelCenter.add(resultatParSexeCandidat());
-        panelCenter.add(new JLabel("Center 4"));
+        panelCenter.add(resultatParCandidatSexe());
 
         panel.add(panelWest, BorderLayout.WEST);
         panel.add(panelCenter, BorderLayout.CENTER);
@@ -215,7 +215,6 @@ public class ElectionGui extends JFrame {
     
     private JPanel resultatParSexeCandidat() {
         
-        
         DefaultCategoryDataset categoryDataSet = new DefaultCategoryDataset();
         
         for (Map.Entry<Civilite, List<Candidat>> entry : election.newMapCiviliteCandidats().entrySet()) {
@@ -225,7 +224,26 @@ public class ElectionGui extends JFrame {
         }
         
         JFreeChart chart = ChartFactory.createBarChart3D(
-                "Résultat par civilité", 
+                "Résultat par Sexe/Candidat du scrutin du " + election.getDateSrutin(), 
+                "Civilité", 
+                "Resultat", 
+                categoryDataSet);
+        
+        return new ChartPanel(chart);
+    }
+    
+    private JPanel resultatParCandidatSexe() {
+        
+        DefaultCategoryDataset categoryDataSet = new DefaultCategoryDataset();
+        
+        for (Map.Entry<Civilite, List<Candidat>> entry : election.newMapCiviliteCandidats().entrySet()) {
+            for(Candidat candidat : entry.getValue()) {
+                categoryDataSet.addValue(candidat.getPourCentVoix(), candidat.getNom(), candidat.getCivilite());
+            }
+        }
+        
+        JFreeChart chart = ChartFactory.createBarChart3D(
+                "Résultat par Candidat/Sexe du scrutin du " + election.getDateSrutin(), 
                 "Civilité", 
                 "Resultat", 
                 categoryDataSet);
