@@ -24,8 +24,11 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import modele.Candidat;
+import modele.Civilite;
 import modele.DisplayOrder;
 import org.jfree.chart.*;
+import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
 public class ElectionGui extends JFrame {
@@ -136,9 +139,9 @@ public class ElectionGui extends JFrame {
         panelCenter.setLayout(new GridLayout(2, 2));
         
         
-        panelCenter.add(resultatsParCandidat());
-        panelCenter.add(resultatsParParti());
-        panelCenter.add(new JLabel("Center 3"));
+        panelCenter.add(resultatsParCandidat(election.getDateSrutin()));
+        panelCenter.add(resultatsParParti(election.getDateSrutin()));
+        panelCenter.add(resultatParSexeCandidat());
         panelCenter.add(new JLabel("Center 4"));
 
         panel.add(panelWest, BorderLayout.WEST);
@@ -178,14 +181,14 @@ public class ElectionGui extends JFrame {
         panelWest.add(vBox);
     }
     
-    private JPanel resultatsParCandidat() {
+    private JPanel resultatsParCandidat(int date) {
         
         DefaultPieDataset dataset = new DefaultPieDataset();
         for (Candidat candidat : resultats) {
             dataset.setValue(candidat.getNom(), candidat.getPourCentVoix());
         }
         
-        JFreeChart chart = ChartFactory.createPieChart("Résultat par candidat",
+        JFreeChart chart = ChartFactory.createPieChart("Résultat par candidat du scrutin du " + date,
                 dataset,
                 true,
                 true,
@@ -194,18 +197,38 @@ public class ElectionGui extends JFrame {
         return new ChartPanel(chart);
     }
     
-    private JPanel resultatsParParti() {
+    private JPanel resultatsParParti(int date) {
         DefaultPieDataset dataset = new DefaultPieDataset();
         
         for (Map.Entry<String, Double> parti : election.newMapPartiPourcent().entrySet()) {
             dataset.setValue(parti.getKey(), parti.getValue());
         }
         
-        JFreeChart chart = ChartFactory.createPieChart("Résultat par parti",
+        JFreeChart chart = ChartFactory.createPieChart("Résultat par parti du scrutin du " + date,
                 dataset,
                 true,
                 true,
                 false);
+        
+        return new ChartPanel(chart);
+    }
+    
+    private JPanel resultatParSexeCandidat() {
+        
+        
+        DefaultCategoryDataset categoryDataSet = new DefaultCategoryDataset();
+        
+        for (Map.Entry<Civilite, List<Candidat>> entry : election.newMapCiviliteCandidats().entrySet()) {
+            for(Candidat candidat : entry.getValue()) {
+                categoryDataSet.addValue(candidat.getPourCentVoix(), candidat.getCivilite(), candidat.getNom());
+            }
+        }
+        
+        JFreeChart chart = ChartFactory.createBarChart3D(
+                "Résultat par civilité", 
+                "Civilité", 
+                "Resultat", 
+                categoryDataSet);
         
         return new ChartPanel(chart);
     }
