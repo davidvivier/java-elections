@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import javax.swing.Box;
@@ -135,8 +136,8 @@ public class ElectionGui extends JFrame {
         panelCenter.setLayout(new GridLayout(2, 2));
         
         
-        panelCenter.add(resultatParCandidat());
-        panelCenter.add(new JLabel("Center 2"));
+        panelCenter.add(resultatsParCandidat());
+        panelCenter.add(resultatsParParti());
         panelCenter.add(new JLabel("Center 3"));
         panelCenter.add(new JLabel("Center 4"));
 
@@ -158,8 +159,6 @@ public class ElectionGui extends JFrame {
         // Titre du panneau
         vBox.add(new JLabel("Résultats du scrutin du " + date, (int) CENTER_ALIGNMENT));
         
-        List<Box> hBoxes = new ArrayList<>(resultats.size());
-        
         for (Candidat candidat : resultats) {
             Box box = Box.createHorizontalBox();
                 String imagePath = mapCandidatImage.get(candidat);
@@ -179,7 +178,7 @@ public class ElectionGui extends JFrame {
         panelWest.add(vBox);
     }
     
-    private JPanel resultatParCandidat() {
+    private JPanel resultatsParCandidat() {
         
         DefaultPieDataset dataset = new DefaultPieDataset();
         for (Candidat candidat : resultats) {
@@ -187,6 +186,22 @@ public class ElectionGui extends JFrame {
         }
         
         JFreeChart chart = ChartFactory.createPieChart("Résultat par candidat",
+                dataset,
+                true,
+                true,
+                false);
+        
+        return new ChartPanel(chart);
+    }
+    
+    private JPanel resultatsParParti() {
+        DefaultPieDataset dataset = new DefaultPieDataset();
+        
+        for (Map.Entry<String, Double> parti : election.newMapPartiPourcent().entrySet()) {
+            dataset.setValue(parti.getKey(), parti.getValue());
+        }
+        
+        JFreeChart chart = ChartFactory.createPieChart("Résultat par parti",
                 dataset,
                 true,
                 true,
